@@ -4,9 +4,16 @@ namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Tests\AppBundle\Traits\ControllerTrait;
 
 class DefaultControllerTest extends WebTestCase
 {
+
+    use ControllerTrait;
+
+    /**
+     * Functional Homepage testing without credentials
+     */
     public function testIndexWithoutCredentials()
     {
         // Create client and request home_page
@@ -20,20 +27,22 @@ class DefaultControllerTest extends WebTestCase
         );
 
         // Check unauthorized methods
-        $this->testUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
-
+        $this->checkUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
     }
 
+    /**
+     * Functionnal Homepage testing with credentials
+     */
     public function testIndexWithCredentials()
     {
         // Create an authenticated user
-        $client = static::createClient(array(), array(
+        $client = static::createClient([], [
             'PHP_AUTH_USER' => 'Thibaud41',
             'PHP_AUTH_PW'   => 'pommepomme',
-        ));
+        ]);
 
         // Check unauthorized methods
-        $this->testUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
+        $this->checkUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
 
         // Request homepage
         $crawler = $client->request('GET', '/');
@@ -42,7 +51,7 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         // Check if create-user button is present
-        $this->testLink(
+        $this->checkLink(
             1,
             "Créer un utilisateur",
             "/users/create",
@@ -50,7 +59,7 @@ class DefaultControllerTest extends WebTestCase
         );
 
         // Check if logout button is present
-        $this->testLink(
+        $this->checkLink(
             1,
             "Se déconnecter",
             "/logout",
@@ -58,7 +67,7 @@ class DefaultControllerTest extends WebTestCase
         );
 
         // Check if create-task button is present
-        $this->testLink(
+        $this->checkLink(
             1,
             "Créer une nouvelle tâche",
             "/tasks/create",
@@ -66,73 +75,19 @@ class DefaultControllerTest extends WebTestCase
         );
 
         // Check if list-current-tasks button is present
-        $this->testLink(
+        $this->checkLink(
             1,
             "Consulter la liste des tâches à faire",
             "/tasks",
             $crawler
         );
 
-
         // Check if list-ended-tasks button is present
-        $this->testLink(
+        $this->checkLink(
             1,
             "Consulter la liste des tâches terminées",
-            "/",
+            "",
             $crawler
         );
-
-    }
-    
-    private function testLink(int $count, string $content, string $href, Crawler $crawler)
-    {
-        // Store base href
-        $host = $crawler->getBaseHref();
-
-        // Check presence
-        $this->assertEquals(
-            $count,
-            $crawler->filter('a:contains("' . $content . '")')->count()
-        );
-
-        // Check href
-        $this->assertEquals(
-            $host . substr($href, 1),
-            $crawler->selectLink($content)->link()->getUri()
-        );
-    }
-
-    private function testUnauthorizedMethods(string $uri, array $authorized, $client)
-    {
-        // All HTTP methods
-        $methods = [
-            'GET',
-            'POST',
-            'DELETE',
-            'PUT',
-            'PATCH',
-            'COPY',
-            'HEAD',
-            'OPTIONS',
-            'LINK',
-            'UNLINK',
-            'PURGE',
-            'LOCK',
-            'UNLOCK',
-            'PROPFIND',
-            'VIEW'
-        ];
-
-        // Loop on every available methods
-        foreach($methods as $method) {
-            // Check if method is unauthorized
-            if(!in_array($method, $authorized)){
-                // Request path with current method
-                $client->request($method, $uri);
-                // Check if 405 status code
-                $this->assertEquals(405, $client->getResponse()->getStatusCode());
-            }
-        }
-
     }
 }
