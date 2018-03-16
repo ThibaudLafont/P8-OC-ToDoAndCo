@@ -19,6 +19,9 @@ class DefaultControllerTest extends WebTestCase
             $client->getResponse()->isRedirect($ext . "/login")
         );
 
+        // Check unauthorized methods
+        $this->testUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
+
     }
 
     public function testIndexWithCredentials()
@@ -28,6 +31,9 @@ class DefaultControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'Thibaud41',
             'PHP_AUTH_PW'   => 'pommepomme',
         ));
+
+        // Check unauthorized methods
+        $this->testUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
 
         // Request homepage
         $crawler = $client->request('GET', '/');
@@ -42,14 +48,6 @@ class DefaultControllerTest extends WebTestCase
             "/users/create",
             $crawler
         );
-//        $this->assertEquals(    // Check presence
-//            1,
-//            $crawler->filter('a:contains("Créer un utilisateur")')->count()
-//        );
-//        $this->assertEquals(    // Check href
-//            $host . '/users/create',
-//            $crawler->selectLink("Créer un utilisateur")->link()->getUri()
-//        );
 
         // Check if logout button is present
         $this->testLink(
@@ -58,14 +56,6 @@ class DefaultControllerTest extends WebTestCase
             "/logout",
             $crawler
         );
-//        $this->assertEquals(    // Check presence
-//            1,
-//            $crawler->filter('a:contains("Se déconnecter")')->count()
-//        );
-//        $this->assertEquals(    // Check href
-//            $host . '/logout',
-//            $crawler->selectLink("Se déconnecter")->link()->getUri()
-//        );
 
         // Check if create-task button is present
         $this->testLink(
@@ -74,14 +64,6 @@ class DefaultControllerTest extends WebTestCase
             "/tasks/create",
             $crawler
         );
-//        $this->assertEquals(    // Check presence
-//            1,
-//            $crawler->filter('a:contains("Créer une nouvelle tâche")')->count()
-//        );
-//        $this->assertEquals(    // Check href
-//            $host . '/tasks/create',
-//            $crawler->selectLink("Créer une nouvelle tâche")->link()->getUri()
-//        );
 
         // Check if list-current-tasks button is present
         $this->testLink(
@@ -90,14 +72,6 @@ class DefaultControllerTest extends WebTestCase
             "/tasks",
             $crawler
         );
-//        $this->assertEquals(    // Check presence
-//            1,
-//            $crawler->filter('a:contains("Consulter la liste des tâches à faire")')->count()
-//        );
-//        $this->assertEquals(    // Check href
-//            $host . '/tasks',
-//            $crawler->selectLink("Consulter la liste des tâches à faire")->link()->getUri()
-//        );
 
 
         // Check if list-ended-tasks button is present
@@ -107,17 +81,9 @@ class DefaultControllerTest extends WebTestCase
             "/",
             $crawler
         );
-//        $this->assertEquals(    // Check presence
-//            1,
-//            $crawler->filter('a:contains("Consulter la liste des tâches terminées")')->count()
-//        );
-//        $this->assertEquals(    // Check href
-//            $host . '/',
-//            $crawler->selectLink("Consulter la liste des tâches terminées")->link()->getUri()
-//        );
 
     }
-
+    
     private function testLink(int $count, string $content, string $href, Crawler $crawler)
     {
         // Store base href
@@ -134,5 +100,39 @@ class DefaultControllerTest extends WebTestCase
             $host . substr($href, 1),
             $crawler->selectLink($content)->link()->getUri()
         );
+    }
+
+    private function testUnauthorizedMethods(string $uri, array $authorized, $client)
+    {
+        // All HTTP methods
+        $methods = [
+            'GET',
+            'POST',
+            'DELETE',
+            'PUT',
+            'PATCH',
+            'COPY',
+            'HEAD',
+            'OPTIONS',
+            'LINK',
+            'UNLINK',
+            'PURGE',
+            'LOCK',
+            'UNLOCK',
+            'PROPFIND',
+            'VIEW'
+        ];
+
+        // Loop on every available methods
+        foreach($methods as $method) {
+            // Check if method is unauthorized
+            if(!in_array($method, $authorized)){
+                // Request path with current method
+                $client->request($method, $uri);
+                // Check if 405 status code
+                $this->assertEquals(405, $client->getResponse()->getStatusCode());
+            }
+        }
+
     }
 }
