@@ -50,6 +50,7 @@ class DefaultControllerTest extends WebTestCase
         // Check if StatusCode is 200
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        // TODO : reserved to admins
         // Check if create-user button is present
         $this->checkLink(
             "Créer un utilisateur",
@@ -57,6 +58,8 @@ class DefaultControllerTest extends WebTestCase
             1,
             $crawler
         );
+
+        // TODO : add edit profile button check
 
         // Check if logout button is present
         $this->checkLink(

@@ -111,11 +111,22 @@ class SecurityControllerTest extends WebTestCase
         $form = $this->createLoginForm('Thibaud41', 'pommepomme', $crawler);
         $client->submit($form);
 
-        // Check redirection
+        // Check if redirected
+        $this->assertTrue(
+            $client->getResponse()->isRedirect()
+        );
+        // Check statusCode
         $this->assertEquals(
             302,
             $client->getResponse()->getStatusCode()
         );
+    }
+
+    public function testLogout()
+    {
+        // Request Logout with authenticated user
+        // Check redirection
+        // Check logout is effective
     }
 
     // Private functions
