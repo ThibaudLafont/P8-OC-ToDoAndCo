@@ -14,7 +14,7 @@ trait ControllerTrait
      * @param string $href     Expect href
      * @param Crawler $crawler Actual crawler
      */
-    private function checkLink(int $count, string $content, string $href, Crawler $crawler)
+    private function checkLink(string $content, string $href, int $count, Crawler $crawler)
     {
         // Check Link presence
         $this->assertEquals(
@@ -71,7 +71,13 @@ trait ControllerTrait
         }
     }
 
-    private function checkForm(string $filter, int $count, string $action, string $method, Crawler $crawler)
+    private function checkForm(
+        string $filter,
+        string $action,
+        string $method,
+        int $count,
+        Crawler $crawler
+    )
     {
         // Check Form presence
         $this->assertEquals(
@@ -92,10 +98,10 @@ trait ControllerTrait
 
     private function checkInput(
         string $filter,
-        int $count,
         string $type,
         string $id,
         string $name,
+        int $count,
         Crawler $crawler
     )
     {
@@ -120,4 +126,47 @@ trait ControllerTrait
             $crawler->filter($filter)->first()->attr('name')
         );
     }
+
+    private function checkLabel(string $filter, string $for, int $count, Crawler $crawler)
+    {
+        // Check presence
+        $this->assertEquals(
+            $count,
+            $crawler->filter('label:contains("' . $filter . '")')->count()
+        );
+        // Check label for
+        $this->assertEquals(
+            $for,
+            $crawler->filter('label:contains("' . $filter . '")')->attr('for')
+        );
+    }
+
+    private function checkButton(string $filter, string $value, string $type, int $count, Crawler $crawler)
+    {
+        // Check presence
+        $this->assertEquals(
+            $count,
+            $crawler->filter($filter)->count()
+        );
+        // Check button value
+        $this->assertEquals(
+            $value,
+            $crawler->filter($filter)->getNode(0)->nodeValue
+        );
+        // Check type
+        $this->assertEquals(
+            $type,
+            $crawler->filter($filter)->attr('type')
+        );
+    }
+
+    private function createForm(string $buttonValue, array $fields, Crawler $crawler)
+    {
+        // Find submit button
+        $buttonCrawlerNode = $crawler->selectButton($buttonValue);
+
+        // Inquire input values
+        return $buttonCrawlerNode->form($fields);
+    }
+
 }

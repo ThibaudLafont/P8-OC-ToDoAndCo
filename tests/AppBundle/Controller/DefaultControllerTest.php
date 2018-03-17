@@ -52,41 +52,41 @@ class DefaultControllerTest extends WebTestCase
 
         // Check if create-user button is present
         $this->checkLink(
-            1,
             "Créer un utilisateur",
             "/users/create",
+            1,
             $crawler
         );
 
         // Check if logout button is present
         $this->checkLink(
-            1,
             "Se déconnecter",
             "/logout",
+            1,
             $crawler
         );
 
         // Check if create-task button is present
         $this->checkLink(
-            1,
             "Créer une nouvelle tâche",
             "/tasks/create",
+            1,
             $crawler
         );
 
         // Check if list-current-tasks button is present
         $this->checkLink(
-            1,
             "Consulter la liste des tâches à faire",
             "/tasks",
+            1,
             $crawler
         );
 
         // Check if list-ended-tasks button is present
         $this->checkLink(
-            1,
             "Consulter la liste des tâches terminées",
             "",
+            1,
             $crawler
         );
     }
