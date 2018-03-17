@@ -13,16 +13,43 @@ class UserControllerTest extends WebTestCase
 
     public function testListUsersWithoutCredentials()
     {
-        // Request /users with anon-user with all methods
-        // Check forbidden
-        // Check redirection to /login
+        // Create anon user
+        $client = static::createClient();
+
+        // Check GET request
+        $client->request('GET', '/users');
+        // Check if 302 statusCode
+        $this->assertEquals(
+            302,
+            $client->getResponse()->getStatusCode()
+        );
+        // Check redirection
+        $ext = $client->getRequest()->getSchemeAndHttpHost();     // Get host name
+        $this->assertTrue(                                        // Check if redirected to /login
+            $client->getResponse()->isRedirect($ext . "/login")
+        );
+
+        // Request /users with all other methods and expect 405 status code
+        $this->checkUnauthorizedMethods('/users', ['GET', 'HEAD'], $client);
     }
 
     public function testListUsersWithBadCredentials()
     {
+        // Create role_user user
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleUser',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+        // GET request
+        $client->request('GET', '/users');
+        // Check 403
+        $this->assertEquals(
+            403,
+            $client->getResponse()->getStatusCode()
+        );
+
         // Request /users with role_user user with all methods
-        // Check forbidden
-        // Check redirection to /login
+        $this->checkUnauthorizedMethods('/users', ['GET', 'HEAD'], $client);
     }
 
     public function testListUsersWithCredentials()

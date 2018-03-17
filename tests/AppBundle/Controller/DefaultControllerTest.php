@@ -2,6 +2,7 @@
 
 namespace Tests\AppBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Traits\ControllerTrait;
@@ -32,9 +33,16 @@ class DefaultControllerTest extends WebTestCase
 
     public function testIndexWithUserCredentials()
     {
-        // Request / with role_user user
-        // Check statusCode
-        // Same check than testIndexWithAdminCredentials
+        // Create role_user user
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleUser',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+
+        // Check index display
+        $this->checkIndex($client);
+
+        // TODO : Check non presence of add-user button
     }
 
     /**
@@ -48,6 +56,20 @@ class DefaultControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'pommepomme',
         ]);
 
+        // Check index display & store crawler
+        $crawler = $this->checkIndex($client);
+
+        // Check if create-user button is present
+        $this->checkLink(
+            "Créer un utilisateur",
+            "/users/create",
+            1,
+            $crawler
+        );
+    }
+
+    private function checkIndex(Client $client)
+    {
         // Check unauthorized methods
         $this->checkUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
 
@@ -55,15 +77,9 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         // Check if StatusCode is 200
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        // TODO : reserved to admins
-        // Check if create-user button is present
-        $this->checkLink(
-            "Créer un utilisateur",
-            "/users/create",
-            1,
-            $crawler
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
         );
 
         // TODO : add edit profile button check
@@ -76,7 +92,6 @@ class DefaultControllerTest extends WebTestCase
             $crawler
         );
 
-        // TODO : keep it only here
         // Check if create-task button is present
         $this->checkLink(
             "Créer une nouvelle tâche",
@@ -100,5 +115,8 @@ class DefaultControllerTest extends WebTestCase
             1,
             $crawler
         );
+
+        // return crawler for additional checks
+        return $crawler;
     }
 }

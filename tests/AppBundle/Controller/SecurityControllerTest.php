@@ -12,7 +12,7 @@ class SecurityControllerTest extends WebTestCase
     use ControllerTrait;
 
     // Test functions
-    public function testLoginGet()
+    public function testLoginDisplay()
     {
         // Create client
         $client = static::createClient();
@@ -78,7 +78,13 @@ class SecurityControllerTest extends WebTestCase
         );
 
         // Check submit button
-        $this->checkButton('form button', 'Se connecter', 'submit', 1, $crawler);
+        $this->checkButton(
+            'button:contains("Se connecter")',
+            'Se connecter',
+            'submit',
+            1,
+            $crawler
+        );
     }
 
     public function testLoginSubmitWithInvalidCredentials()
@@ -103,32 +109,19 @@ class SecurityControllerTest extends WebTestCase
 
     public function testLoginSubmitWithValidUserCredentials()
     {
-        // Same as above with role_user user
+        // Check login submit with role_admin credentials
+        $this->checkValidLoginSubmit('RoleUser', 'pommepomme');
     }
 
     public function testLoginSubmitWithValidAdminCredentials()
     {
-        // Generate client and request
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');  // Request login page
-
-        // Generate and store Crawler with role_admin user id
-        $form = $this->createLoginForm('Thibaud41', 'pommepomme', $crawler);
-        $client->submit($form);
-
-        // Check if redirected
-        $this->assertTrue(
-            $client->getResponse()->isRedirect()
-        );
-        // Check statusCode
-        $this->assertEquals(
-            302,
-            $client->getResponse()->getStatusCode()
-        );
+        // Check login submit with role_admin credentials
+        $this->checkValidLoginSubmit('Thibaud41', 'pommepomme');
     }
 
     public function testLogout()
     {
+        // TODO
         // Request Logout with authenticated user
         // Check redirection
         // Check logout is effective
@@ -145,6 +138,27 @@ class SecurityControllerTest extends WebTestCase
 
         // Return Crawler
         return $this->createForm('Se connecter', $fields, $crawler);
+    }
+
+    private function checkValidLoginSubmit(string $username, string $password)
+    {
+        // Generate client and request
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/login');  // Request login page
+
+        // Generate and store Crawler with role_admin user id
+        $form = $this->createLoginForm($username, $password, $crawler);
+        $client->submit($form);
+
+        // Check if redirected
+        $this->assertTrue(
+            $client->getResponse()->isRedirect()
+        );
+        // Check statusCode
+        $this->assertEquals(
+            302,
+            $client->getResponse()->getStatusCode()
+        );
     }
 
 }
