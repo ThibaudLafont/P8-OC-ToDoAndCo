@@ -28,14 +28,22 @@ class TaskControllerTest extends WebTestCase
         );
     }
 
-    public function testListTasksWithCredentials()
+    public function testListTasksWithUserCredentials()
     {
-        // Request path with authenticated user
+        // Same as below with role_user user
+        // Does not expect add-user link
+    }
+
+    public function testListTasksWithAdminCredentials()
+    {
+        // Request path with authenticated role_admin user
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'Thibaud41',
             'PHP_AUTH_PW'   => 'pommepomme',
         ]);
         $crawler = $client->request('GET', '/tasks');
+
+        // TODO : check add-user button
 
         // Check Logout link
         $this->checkLink(
@@ -93,16 +101,23 @@ class TaskControllerTest extends WebTestCase
         // Check redirection to /login
     }
 
-    public function testCreateTaskDisplayWithCredentials()
+    public function testCreateTaskDisplayWithUserCredentials()
+    {
+        // Same as below with role_user user
+        // Does not expect add-user button
+    }
+
+    public function testCreateTaskDisplayWithAdminCredentials()
     {
         // Request /tasks/create with auth user
         // Check 200 status code
+        // Check add-user button
         // Check task-form
     }
 
-    public function testInvalidCreateTaskWithCredentials()
+    public function testInvalidCreateTaskWithUserCredentials()
     {
-        // Request /tasks/create with role_admin user
+        // Request /tasks/create with role_user user
         // Fill&Submit form with invalid datas
         // Check redirection to /tasks/create
         // Check flash-message
@@ -110,32 +125,57 @@ class TaskControllerTest extends WebTestCase
         // Check error messages
     }
 
-    public function testValidCreateTaskWithCredentials()
+    public function testInvalidCreateTaskWithAdminCredentials()
     {
-        // Request /tasks/create with role_admin user
+        // Same as below with role_admin user
+        // Check add-user button
+    }
+
+    public function testValidCreateTaskWithUserCredentials()
+    {
+        // Request /tasks/create with role_user user
         // Fill&Submit form with valid datas
         // Check redirection to /tasks
         // Check flash-message
         // Check presence of new user
     }
 
-    public function testDeleteAnonTaskWithoutCredentials()
+    public function testValidCreateTaskWithAdminCredentials()
     {
-        // Request /tasks/id/delete with role_user user with all methods
-        // Check forbidden
-        // Check redirection to /tasks
-        // Check nbre of tasks
+        // Same as below with role_admin user
+        // Check add-user button
     }
 
-    public function testDeleteAnonTaskWithCredentials()
+    public function testDeleteAnonTaskWithoutCredentials()
     {
-        // Request /tasks/id/delete with role_admin user
+        // Request /tasks/id/delete with anon user with all methods
+        // Check forbidden
+        // Check redirection to /login
+    }
+
+    public function testDeleteAnonTaskWithUserCredentials()
+    {
+        // Request /tasks/id/delete with anon user with all methods
+        // Check forbidden
+        // Check redirection to /tasks
+    }
+
+    public function testDeleteAnonTaskWithAdminCredentials()
+    {
+        // Request /tasks/id/delete witch user who post task
         // Check redirection to /tasks
         // Check flash-message
         // Check nbre of tasks
     }
 
     public function testDeleteRelatedTaskWithoutCredentials()
+    {
+        // Request /tasks/id/delete with anon user with all methods
+        // Check forbidden
+        // Check redirection to /login
+    }
+
+    public function testDeleteRelatedTaskWithBadCredentials()
     {
         // Request /tasks/id/delete witch user does not post task with all methods
         // Check forbidden
@@ -158,22 +198,28 @@ class TaskControllerTest extends WebTestCase
         // Check redirection to /login
     }
 
-    public function testToggleTaskWithCredentials()
+    public function testToggleTaskWithUserCredentials()
     {
-        // Request /tasks/id/toggle with authenticated user
+        // Request /tasks/id/toggle with role_user user
         // Check redirection to /tasks
         // Check flash-message
         // Check if reactive-task button is present
     }
 
-    public function testEditTaskWithAnon()
+    public function testToggleTaskWithAdminCredentials()
+    {
+        // Same as below with role_admin user
+        // Check add-user button
+    }
+
+    public function testEditTaskWithoutCredentials()
     {
         // Request /tasks/id/edit with anon user with all methods
         // Check forbidden
         // Check redirection to /login
     }
 
-    public function testEditTaskWithoutCredentials()
+    public function testEditTaskWithBadCredentials()
     {
         // Request /tasks/id/edit with non-creator user with all methods
         // Check forbidden
@@ -187,22 +233,34 @@ class TaskControllerTest extends WebTestCase
         // Check task-form display
     }
 
-    public function testInvalidEditTaskActionWithCredentials()
+    public function testInvalidEditTaskActionWithUserCredentials()
     {
-        // Request /tasks/id/edit with author
+        // Request /tasks/id/edit with role_user author
         // Fill&submit wrong datas
         // Check value of valid fields
         // Check flash-message
         // Check errors
     }
 
-    public function testValidEditTaskActionWithCredentials()
+    public function testInvalidEditTaskActionWithAdminCredentials()
     {
-        // Request /tasks/id/edit with author
+        // Same as below with role_admin user
+        // Check add-user button
+    }
+
+    public function testValidEditTaskActionWithUserCredentials()
+    {
+        // Request /tasks/id/edit with role_user author
         // Fill&submit valid datas
         // Check redirection to /tasks
         // Check flash-message
         // Check if new task is listed
+    }
+
+    public function testValidEditTaskActionWithAdminCredentials()
+    {
+        // Same as below with role_admin user
+        // Check add-user button
     }
 
     private function checkTaskFormDisplay()

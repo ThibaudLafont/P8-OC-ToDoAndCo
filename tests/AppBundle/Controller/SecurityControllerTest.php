@@ -101,13 +101,18 @@ class SecurityControllerTest extends WebTestCase
         );
     }
 
-    public function testLoginSubmitWithValidCredentials()
+    public function testLoginSubmitWithValidUserCredentials()
+    {
+        // Same as above with role_user user
+    }
+
+    public function testLoginSubmitWithValidAdminCredentials()
     {
         // Generate client and request
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');  // Request login page
 
-        // Generate and store Crawler
+        // Generate and store Crawler with role_admin user id
         $form = $this->createLoginForm('Thibaud41', 'pommepomme', $crawler);
         $client->submit($form);
 

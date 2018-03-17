@@ -30,10 +30,17 @@ class DefaultControllerTest extends WebTestCase
         $this->checkUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
     }
 
+    public function testIndexWithUserCredentials()
+    {
+        // Request / with role_user user
+        // Check statusCode
+        // Same check than testIndexWithAdminCredentials
+    }
+
     /**
      * Functionnal Homepage testing with credentials
      */
-    public function testIndexWithCredentials()
+    public function testIndexWithAdminCredentials()
     {
         // Create an authenticated user
         $client = static::createClient([], [
@@ -69,6 +76,7 @@ class DefaultControllerTest extends WebTestCase
             $crawler
         );
 
+        // TODO : keep it only here
         // Check if create-task button is present
         $this->checkLink(
             "Créer une nouvelle tâche",
