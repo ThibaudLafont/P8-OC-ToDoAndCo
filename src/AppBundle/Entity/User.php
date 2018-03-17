@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Enumerations\UserRole;
+use AppBundle\Form\Type\UserType;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -41,7 +42,7 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @ORM\Column(name="role", type="string", length=60, unique=true)
+     * @ORM\Column(name="role", type="string", length=60)
      */
     private $role;
 
@@ -87,7 +88,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return [$this->getRole()];
+        return [UserRole::getValue($this->getRole())];
     }
 
     public function eraseCredentials()
@@ -119,8 +120,8 @@ class User implements UserInterface
      *
      * @return string
      */
-    public function getRole() : string
+    public function getRole()
     {
-        return UserRole::getValue($this->role);
+        if($this->role != null) return $this->role;
     }
 }

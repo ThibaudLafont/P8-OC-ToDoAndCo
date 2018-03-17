@@ -110,23 +110,193 @@ class UserControllerTest extends WebTestCase
 
     public function testCreateUserWithoutCredentials()
     {
-        // Request /users/create with anon-user
-        // Check forbidden
-        // Check redirection to /login
+        // Create anon user
+        $client = static::createClient();
+
+        // Check GET request
+        $client->request('GET', '/users/create');
+        // Check if 302 statusCode
+        $this->assertEquals(
+            302,
+            $client->getResponse()->getStatusCode()
+        );
+        // Check redirection
+        $ext = $client->getRequest()->getSchemeAndHttpHost();     // Get host name
+        $this->assertTrue(                                        // Check if redirected to /login
+            $client->getResponse()->isRedirect($ext . "/login")
+        );
+
+        // Request /users with all other methods and expect 405 status code
+        $this->checkUnauthorizedMethods('/users', ['GET', 'HEAD'], $client);
     }
 
-    public function testCreateUserWithBadCredentials()
+    public function testCreateUserWithUserCredentials()
     {
-        // Request /users/create with role_user user
-        // Check forbidden
-        // Check redirection to /login
+        // Create role_user user
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleUser',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+        // GET request
+        $client->request('GET', '/users/create');
+
+        // Check 403
+        $this->assertEquals(
+            403,
+            $client->getResponse()->getStatusCode()
+        );
+
+        // Request /users with role_user user with all methods
+        $this->checkUnauthorizedMethods('/users', ['GET', 'HEAD'], $client);
     }
 
-    public function testCreateUserDisplayWithCredentials()
+    public function testCreateUserDisplayWithAdminCredentials()
     {
-        // Request /users/create with role_admin user
+        // Create role_admin user and request /users
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleAdmin',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+        $crawler = $client->request('GET', '/users/create');
+
         // Check statusCode
-        // Check user-form
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+
+        // Check add user button
+        $this->checkLink(
+            "Créer un utilisateur",
+            "/users/create",
+            1,
+            $crawler
+        );
+
+        // Check logout button
+        $this->checkLink(
+            "Se déconnecter",
+            "/logout",
+            1,
+            $crawler
+        );
+
+        // Check H1
+        $this->assertEquals(
+            1,
+            $crawler->filter('h1:contains("Créer un utilisateur")')->count()
+        );
+
+        // Check User form
+        // Presence&target
+        $this->checkForm(
+            'form',
+            '/users/create',
+            'post',
+            1,
+            $crawler
+        );
+
+        // Check username input
+        $this->checkInput(
+            'input#user_username',
+            'text',
+            'user_username',
+            'user[username]',
+            1,
+            $crawler
+        );
+        // Check username label
+        $this->checkLabel(
+            "Nom d'utilisateur",
+            "user_username",
+            1,
+            $crawler
+        );
+
+        // Check first password input
+        $this->checkInput(
+            'input#user_password_first',
+            'password',
+            'user_password_first',
+            'user[password][first]',
+            1,
+            $crawler
+        );
+        // Check second password label
+        $this->checkLabel(
+            "Mot de passe",
+            "user_password_first",
+            1,
+            $crawler
+        );
+
+        // Check second password input
+        $this->checkInput(
+            'input#user_password_second',
+            'password',
+            'user_password_second',
+            'user[password][second]',
+            1,
+            $crawler
+        );
+        // Check second password label
+        $this->checkLabel(
+            "Tapez le mot de passe à nouveau",
+            "user_password_second",
+            1,
+            $crawler
+        );
+
+        // Check email input
+        $this->checkInput(
+            'input#user_email',
+            'email',
+            'user_email',
+            'user[email]',
+            1,
+            $crawler
+        );
+        // Check email label
+        $this->checkLabel(
+            "Adresse email",
+            "user_email",
+            1,
+            $crawler
+        );
+
+        // Check role label
+        $this->checkLabel(
+            "Role",
+            "user_role",
+            1,
+            $crawler
+        );
+        // Check role select
+        $this->assertEquals(
+            1,
+            $crawler->filter('select#user_role')->count()
+        );
+        // Check role option 1
+        $this->assertEquals(
+            1,
+            $crawler->filter('option:contains("Administrateur")')->count()
+        );
+        // Check role option 2
+        $this->assertEquals(
+            1,
+            $crawler->filter('option:contains("Utilisateur")')->count()
+        );
+
+        // Check submit button
+        $this->checkButton(
+            'button:contains("Ajouter")',
+            'Ajouter',
+            'submit',
+            1,
+            $crawler
+        );
+
     }
 
     public function testInvalidCreateUserActionWithCredentials()
