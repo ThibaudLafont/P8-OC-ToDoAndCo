@@ -8,6 +8,15 @@ framework:
     profiler:
         collect: false
 
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   todo_test
+        user:     "%database_user%"
+        password: "%database_password%"
+
 web_profiler:
     toolbar: false
     intercept_redirects: false
