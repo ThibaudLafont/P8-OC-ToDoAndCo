@@ -33,7 +33,7 @@ class UserControllerTest extends WebTestCase
         $this->checkUnauthorizedMethods('/users', ['GET', 'HEAD'], $client);
     }
 
-    public function testListUsersWithBadCredentials()
+    public function testListUsersWithUserCredentials()
     {
         // Create role_user user
         $client = static::createClient([], [
@@ -52,16 +52,60 @@ class UserControllerTest extends WebTestCase
         $this->checkUnauthorizedMethods('/users', ['GET', 'HEAD'], $client);
     }
 
-    public function testListUsersWithCredentials()
+    public function testListUsersWithAdminCredentials()
     {
-        // Request /users with role_admin user
-        // Check status code
+        // Create role_admin user and request /users
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleAdmin',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+        $crawler = $client->request('GET', '/users');
+
+        // Check statusCode
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+
         // Check add user button
+        $this->checkLink(
+            "Créer un utilisateur",
+            "/users/create",
+            1,
+            $crawler
+        );
+
         // Check logout button
+        $this->checkLink(
+            "Se déconnecter",
+            "/logout",
+            1,
+            $crawler
+        );
+
         // Check H1
+        $this->assertEquals(
+            1,
+            $crawler->filter('h1:contains("Liste des utilisateurs")')->count()
+        );
+
         // Check table presence
+        $this->assertEquals(
+            1,
+            $crawler->filter('table')->count()
+        );
+
         // Check nbre of users
+        $this->assertEquals(
+            2,
+            $crawler->filter('tbody tr')->count()
+        );
+
         // Check nbre of edit buttons
+        $this->assertEquals(
+            2,
+            $crawler->filter('a:contains("Edit")')->count()
+        );
     }
 
     public function testCreateUserWithoutCredentials()

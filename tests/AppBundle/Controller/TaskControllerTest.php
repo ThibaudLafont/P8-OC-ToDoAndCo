@@ -38,7 +38,7 @@ class TaskControllerTest extends WebTestCase
     {
         // Request path with authenticated role_admin user
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'Thibaud41',
+            'PHP_AUTH_USER' => 'RoleAdmin',
             'PHP_AUTH_PW'   => 'pommepomme',
         ]);
         $crawler = $client->request('GET', '/tasks');

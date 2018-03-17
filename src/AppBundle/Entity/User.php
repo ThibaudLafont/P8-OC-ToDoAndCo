@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Enumerations\UserRole;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -37,6 +38,12 @@ class User implements UserInterface
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
      */
     private $email;
+
+    /**
+     * @var string
+     * @ORM\Column(name="role", type="string", length=60, unique=true)
+     */
+    private $role;
 
     public function getId()
     {
@@ -80,10 +87,40 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return [$this->getRole()];
     }
 
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    public function setRole(string $role) : User
+    {
+        // if unknow role, throw execption
+        if (!in_array($role, UserRole::getAvailableRoles())) {
+            throw new \InvalidArgumentException("Invalid UserRole");
+        }
+
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role.
+     *
+     * @return string
+     */
+    public function getRole() : string
+    {
+        return UserRole::getValue($this->role);
     }
 }
