@@ -385,34 +385,34 @@ class UserControllerTest extends WebTestCase
 
         // Check first password input
         $this->checkInput(
-            'input#user_password_first',
+            'input#user_plainPassword_first',
             'password',
-            'user_password_first',
-            'user[password][first]',
+            'user_plainPassword_first',
+            'user[plainPassword][first]',
             1,
             $crawler
         );
         // Check second password label
         $this->checkLabel(
             "Mot de passe",
-            "user_password_first",
+            "user_plainPassword_first",
             1,
             $crawler
         );
 
         // Check second password input
         $this->checkInput(
-            'input#user_password_second',
+            'input#user_plainPassword_second',
             'password',
-            'user_password_second',
-            'user[password][second]',
+            'user_plainPassword_second',
+            'user[plainPassword][second]',
             1,
             $crawler
         );
         // Check second password label
         $this->checkLabel(
             "Tapez le mot de passe à nouveau",
-            "user_password_second",
+            "user_plainPassword_second",
             1,
             $crawler
         );
@@ -484,8 +484,8 @@ class UserControllerTest extends WebTestCase
         // Store values in ordered array
         $fields = [
             'user[username]' => $username,
-            'user[password][first]' => $password,
-            'user[password][second]' => $passwordRepeat,
+            'user[plainPassword][first]' => $password,
+            'user[plainPassword][second]' => $passwordRepeat,
             'user[email]' => $email,
             'user[role]' => $role
         ];
@@ -552,12 +552,12 @@ class UserControllerTest extends WebTestCase
         // Password
         $this->assertEquals(
             '',
-            $crawler->filter('input#user_password_first')->first()->attr('value')
+            $crawler->filter('input#user_plainPassword_first')->first()->attr('value')
         );
         // Repeat Password
         $this->assertEquals(
             '',
-            $crawler->filter('input#user_password_second')->first()->attr('value')
+            $crawler->filter('input#user_plainPassword_second')->first()->attr('value')
         );
         // Email
         $this->assertEquals(

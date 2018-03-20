@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table("user")
  * @ORM\Entity
  * @ORM\EntityListeners({"AppBundle\EventListener\UserListener"})
- * 
+ *
  * @UniqueEntity(
  *     "email",
  *     message="Cette adresse mail n'est pas disponible."
