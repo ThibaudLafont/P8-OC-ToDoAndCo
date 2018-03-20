@@ -40,13 +40,8 @@ class TaskControllerTest extends WebTestCase
         // Check Task list
         $crawler = $this->checkTaskList($client);
 
-        // Check create-user button non presence
-        $this->checkLink(
-            "Créer un utilisateur",
-            "/users/create",
-            0,
-            $crawler
-        );
+        // Check base links
+        $this->checkBaseLinks($crawler, false);
     }
 
     public function testListTasksWithAdminCredentials()
@@ -60,13 +55,8 @@ class TaskControllerTest extends WebTestCase
         // Check Task list
         $crawler = $this->checkTaskList($client);
 
-        // Check add-user button presence
-        $this->checkLink(
-            "Créer un utilisateur",
-            "/users/create",
-            1,
-            $crawler
-        );
+        // Check base links
+        $this->checkBaseLinks($crawler, true);
 
     }
 
@@ -241,15 +231,8 @@ class TaskControllerTest extends WebTestCase
 
     private function checkTaskList(Client $client)
     {
+        // Request path
         $crawler = $client->request('GET', '/tasks');
-
-        // Check Logout link
-        $this->checkLink(
-            "Se déconnecter",
-            "/logout",
-            1,
-            $crawler
-        );
 
         // Check add-task link
         $this->checkLink(

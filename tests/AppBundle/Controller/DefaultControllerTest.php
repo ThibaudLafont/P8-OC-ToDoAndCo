@@ -46,13 +46,8 @@ class DefaultControllerTest extends WebTestCase
         // Check index display
         $crawler = $this->checkIndex($client);
 
-        // Check create-user button non presence
-        $this->checkLink(
-            "Créer un utilisateur",
-            "/users/create",
-            0,
-            $crawler
-        );
+        // User buttons layout check
+        $this->checkBaseLinks($crawler, false);
     }
 
     /**
@@ -69,13 +64,8 @@ class DefaultControllerTest extends WebTestCase
         // Check index display & store crawler
         $crawler = $this->checkIndex($client);
 
-        // Check if create-user button is present
-        $this->checkLink(
-            "Créer un utilisateur",
-            "/users/create",
-            1,
-            $crawler
-        );
+        // Admin base links check
+        $this->checkBaseLinks($crawler, true);
     }
 
     /**
@@ -99,16 +89,6 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
-        );
-
-        // TODO : add edit profile button check
-
-        // Check if logout button is present
-        $this->checkLink(
-            "Se déconnecter",
-            "/logout",
-            1,
-            $crawler
         );
 
         // Check title

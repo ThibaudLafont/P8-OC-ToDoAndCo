@@ -206,4 +206,33 @@ trait ControllerTrait
         return $buttonCrawlerNode->form($fields);
     }
 
+    private function checkBaseLinks(Crawler $crawler, bool $admin)
+    {
+        // Define if links should be present
+        $count = $admin ? 1 : 0;
+
+        // Check list-user button
+        $this->checkLink(
+            "Liste des utilisateurs",
+            "/users",
+            $count,
+            $crawler
+        );
+        // Check add-user button
+        $this->checkLink(
+            "Créer un utilisateur",
+            "/users/create",
+            $count,
+            $crawler
+        );
+        // Check if logout button is present
+        $this->checkLink(
+            "Se déconnecter",
+            "/logout",
+            1,
+            $crawler
+        );
+
+    }
+
 }

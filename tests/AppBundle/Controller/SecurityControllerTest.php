@@ -130,7 +130,7 @@ class SecurityControllerTest extends WebTestCase
         // Find and click on logout button
         $link = $crawler->selectLink('Se déconnecter')->link();
         $crawler = $client->click($link);
-        
+
         // Check statusCode
         $this->assertEquals(
             302,

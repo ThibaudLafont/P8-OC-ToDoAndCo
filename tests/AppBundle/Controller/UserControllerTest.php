@@ -67,21 +67,8 @@ class UserControllerTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
 
-        // Check add user button
-        $this->checkLink(
-            "Créer un utilisateur",
-            "/users/create",
-            1,
-            $crawler
-        );
-
-        // Check logout button
-        $this->checkLink(
-            "Se déconnecter",
-            "/logout",
-            1,
-            $crawler
-        );
+        // Admin layout check
+        $this->checkBaseLinks($crawler, true);
 
         // Check H1
         $this->assertEquals(
@@ -165,21 +152,8 @@ class UserControllerTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
 
-        // Check add user button
-        $this->checkLink(
-            "Créer un utilisateur",
-            "/users/create",
-            1,
-            $crawler
-        );
-
-        // Check logout button
-        $this->checkLink(
-            "Se déconnecter",
-            "/logout",
-            1,
-            $crawler
-        );
+        // Check base links
+        $this->checkBaseLinks($crawler, true);
 
         // Check H1
         $this->assertEquals(
