@@ -10,7 +10,6 @@ framework:
 
 doctrine:
     dbal:
-        driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%db_test_name%"

@@ -93,7 +93,8 @@ class UserController extends Controller
             if ($form->isValid()) {
 
                 // Flush modifications
-                $this->getDoctrine()->getManager()->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
                 // Add success flash message
                 $this->addFlash('success', "L'utilisateur a bien été modifié");
 

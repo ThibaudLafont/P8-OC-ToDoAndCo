@@ -34,11 +34,36 @@ class UserListener
     }
 
     /**
-     * Before Message persist, assign user and creation date
+     * User persist
+     *
+     * @param User $user
+     */
+    public function prePersist(User $user)
+    {
+        // Set user password
+        $this->setUserPassword($user);
+    }
+
+    /**
+     * User preFlush
      *
      * @param User $user
      */
     public function preFlush(User $user)
+    {
+        // Check if plainPassword is set
+        if($user->getPlainPassword() !== null){
+            // Set user password
+            $this->setUserPassword($user);
+        }
+    }
+
+    /**
+     * Encode and set password from plainPassword
+     *
+     * @param $user User
+     */
+    private function setUserPassword(User $user)
     {
         // Set user password
         $user->setPassword(
