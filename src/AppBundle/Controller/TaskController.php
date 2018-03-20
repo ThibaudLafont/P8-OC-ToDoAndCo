@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Task;
 use AppBundle\Form\Type\TaskType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,6 +12,7 @@ class TaskController extends Controller
 {
     /**
      * @Route("/tasks", name="task_list")
+     * @Method({"GET"})
      */
     public function listAction()
     {
@@ -19,6 +21,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/create", name="task_create")
+     * @Method({"GET", "POST"})
      */
     public function createAction(Request $request)
     {
@@ -43,6 +46,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
+     * @Method({"GET", "POST"})
      */
     public function editAction(Task $task, Request $request)
     {
@@ -66,6 +70,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @Method({"GET", "POST"})
      */
     public function toggleTaskAction(Task $task)
     {
@@ -79,6 +84,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
+     * @Method({"GET", "POST"})
      */
     public function deleteTaskAction(Task $task)
     {

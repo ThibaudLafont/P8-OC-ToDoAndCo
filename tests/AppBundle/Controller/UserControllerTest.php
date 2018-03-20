@@ -290,7 +290,11 @@ class UserControllerTest extends WebTestCase
     public function testEditUserWithoutCredentials()
     {
         // Request /users/id/edit with anon-user & all methods
-        // Check forbidden
+
+        // Check /login redirection
+
+        // Request /users/id/edit with anon-user with all methods
+
         // Check redirection to /login
     }
 
@@ -308,6 +312,15 @@ class UserControllerTest extends WebTestCase
         // Check user-form
     }
 
+    public function testValidEditUserWithAdminCredentials()
+    {
+        // Request /users/id/edit with role_admin user
+        // Fill&Submit form with valid datas
+        // Check redirection to /users
+        // Check flash-message
+        // Check presence of modifications
+    }
+
     public function testInvalidEditUserWithAdminCredentials()
     {
         // Request /users/id/edit with role_admin user
@@ -316,15 +329,6 @@ class UserControllerTest extends WebTestCase
         // Check flash-message
         // Check value of valid fields
         // Check error messages
-    }
-
-    public function testValidEditUserWithAdminCredentials()
-    {
-        // Request /users/id/edit with role_admin user
-        // Fill&Submit form with valid datas
-        // Check redirection to /users
-        // Check flash-message
-        // Check presence of modifications
     }
 
     private function checkUserForm(Crawler $crawler)
