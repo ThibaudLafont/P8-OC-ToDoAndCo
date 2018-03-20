@@ -114,7 +114,7 @@ class UserControllerTest extends WebTestCase
         );
 
         // Request /users with all other methods and expect 405 status code
-        $this->checkUnauthorizedMethods('/users', ['GET', 'HEAD'], $client);
+        $this->checkUnauthorizedMethods('/users/create', ['GET', 'HEAD', 'POST'], $client);
     }
 
     public function testCreateUserWithUserCredentials()
@@ -134,7 +134,7 @@ class UserControllerTest extends WebTestCase
         );
 
         // Request /users with role_user user with all methods
-        $this->checkUnauthorizedMethods('/users', ['GET', 'HEAD'], $client);
+        $this->checkUnauthorizedMethods('/users/create', ['GET', 'HEAD', 'POST'], $client);
     }
 
     public function testCreateUserDisplayWithAdminCredentials()
@@ -162,7 +162,7 @@ class UserControllerTest extends WebTestCase
         );
 
         // Check User form
-        $this->checkUserForm($crawler);
+        $this->checkUserForm($crawler, '/users/create');
     }
 
     public function testValidCreateUserSubmitWithCredentials()
@@ -289,53 +289,70 @@ class UserControllerTest extends WebTestCase
 
     public function testEditUserWithoutCredentials()
     {
-        // Request /users/id/edit with anon-user & all methods
+        // Create anon user
+        $client = static::createClient();
 
-        // Check /login redirection
+        // Check GET request
+        $client->request('GET', '/users/1/edit');
+        // Check if 302 statusCode
+        $this->assertEquals(
+            302,
+            $client->getResponse()->getStatusCode()
+        );
+        // Check redirection
+        $ext = $client->getRequest()->getSchemeAndHttpHost();     // Get host name
+        $this->assertTrue(                                        // Check if redirected to /login
+            $client->getResponse()->isRedirect($ext . "/login")
+        );
 
-        // Request /users/id/edit with anon-user with all methods
-
-        // Check redirection to /login
+        // Request /users with all other methods and expect 405 status code
+        $this->checkUnauthorizedMethods('/users/1/edit', ['GET', 'HEAD', 'POST'], $client);
     }
 
     public function testEditUserWithUserCredentials()
     {
-        // Request /users/id/edit with role_user user & all methods
-        // Check forbidden
-        // Check redirection to /
+        // Create role_user user
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleUser',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+        // GET request
+        $client->request('GET', '/users/1/edit');
+
+        // Check 405
+        $this->assertEquals(
+            403,
+            $client->getResponse()->getStatusCode()
+        );
+
+        // Request /users with role_user user with all methods
+        $this->checkUnauthorizedMethods('/users/1/edit', ['GET', 'HEAD', 'POST'], $client);
     }
 
     public function testEditUserDisplayWithAdminCredentials()
     {
         // Request /users/id/edit with role_admin user
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleAdmin',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+        $crawler = $client->request('GET', '/users/1/edit');
+
         // Check statusCode
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+
         // Check user-form
+        $this->checkUserForm($crawler, '/users/1/edit');
     }
 
-    public function testValidEditUserWithAdminCredentials()
-    {
-        // Request /users/id/edit with role_admin user
-        // Fill&Submit form with valid datas
-        // Check redirection to /users
-        // Check flash-message
-        // Check presence of modifications
-    }
-
-    public function testInvalidEditUserWithAdminCredentials()
-    {
-        // Request /users/id/edit with role_admin user
-        // Fill&Submit form with invalid datas
-        // Check redirection to /users/id/edit
-        // Check flash-message
-        // Check value of valid fields
-        // Check error messages
-    }
-
-    private function checkUserForm(Crawler $crawler)
+    private function checkUserForm(Crawler $crawler, string $action)
     {
         $this->checkForm(
             'form',
-            '/users/create',
+            $action,
             'post',
             1,
             $crawler
@@ -433,9 +450,10 @@ class UserControllerTest extends WebTestCase
         );
 
         // Check submit button
+        $buttonValue = $action === '/users/create' ? 'Ajouter' : 'Modifier';
         $this->checkButton(
-            'button:contains("Ajouter")',
-            'Ajouter',
+            'button:contains("' . $buttonValue . '")',
+            $buttonValue,
             'submit',
             1,
             $crawler
