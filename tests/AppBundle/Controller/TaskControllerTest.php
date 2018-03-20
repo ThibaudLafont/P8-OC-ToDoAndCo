@@ -2,6 +2,7 @@
 
 namespace Tests\AppBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Traits\ControllerTrait;
@@ -30,8 +31,22 @@ class TaskControllerTest extends WebTestCase
 
     public function testListTasksWithUserCredentials()
     {
-        // Same as below with role_user user
-        // Does not expect add-user link
+        // Request path with authenticated role_user user
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleUser',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+
+        // Check Task list
+        $crawler = $this->checkTaskList($client);
+
+        // Check create-user button non presence
+        $this->checkLink(
+            "Créer un utilisateur",
+            "/users/create",
+            0,
+            $crawler
+        );
     }
 
     public function testListTasksWithAdminCredentials()
@@ -41,55 +56,16 @@ class TaskControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'RoleAdmin',
             'PHP_AUTH_PW'   => 'pommepomme',
         ]);
-        $crawler = $client->request('GET', '/tasks');
 
-        // TODO : check add-user button
+        // Check Task list
+        $crawler = $this->checkTaskList($client);
 
-        // Check Logout link
+        // Check add-user button presence
         $this->checkLink(
-            "Se déconnecter",
-            "/logout",
+            "Créer un utilisateur",
+            "/users/create",
             1,
             $crawler
-        );
-
-        // Check add-task link
-        $this->checkLink(
-            "Créer une tâche",
-            "/tasks/create",
-            1,
-            $crawler
-        );
-
-        // Check presence of 2 tasks
-        $this->assertEquals(
-            2,
-            $crawler->filter('div.task-parent')->count()
-        );
-
-        // TODO : after rework, expect nbre of tasks related to user + anon tasks
-
-        // Check presence of 2 delete buttons
-        $this->checkButton(
-            'button:contains("Supprimer")',
-            'Supprimer',
-            '',
-            2,
-            $crawler
-        );
-
-        // TODO : check presence of 2 edit buttons
-
-        // Check one of them is done
-        $this->assertEquals(
-            1,
-            $crawler->filter('button:contains("Marquer non terminée")')->count()
-        );
-
-        // Check one of them is pending
-        $this->assertEquals(
-            1,
-            $crawler->filter('button:contains("Marquer comme faite")')->count()
         );
 
     }
@@ -261,6 +237,62 @@ class TaskControllerTest extends WebTestCase
     {
         // Same as below with role_admin user
         // Check add-user button
+    }
+
+    private function checkTaskList(Client $client)
+    {
+        $crawler = $client->request('GET', '/tasks');
+
+        // Check Logout link
+        $this->checkLink(
+            "Se déconnecter",
+            "/logout",
+            1,
+            $crawler
+        );
+
+        // Check add-task link
+        $this->checkLink(
+            "Créer une tâche",
+            "/tasks/create",
+            1,
+            $crawler
+        );
+
+        // Check presence of 2 tasks
+        $this->assertEquals(
+            2,
+            $crawler->filter('div.task-parent')->count()
+        );
+
+        // TODO : after rework, expect nbre of tasks related to user + anon tasks
+
+        // Check presence of 2 delete buttons
+        $this->checkButton(
+            'button:contains("Supprimer")',
+            'Supprimer',
+            '',
+            2,
+            $crawler
+        );
+
+        // TODO : check presence of 2 edit buttons
+
+        // Check one of them is done
+        $this->assertEquals(
+            1,
+            $crawler->filter('button:contains("Marquer non terminée")')->count()
+        );
+
+        // Check one of them is pending
+        $this->assertEquals(
+            1,
+            $crawler->filter('button:contains("Marquer comme faite")')->count()
+        );
+
+        // Return Crawler for additional checks
+        return $crawler;
+
     }
 
     private function checkTaskFormDisplay()

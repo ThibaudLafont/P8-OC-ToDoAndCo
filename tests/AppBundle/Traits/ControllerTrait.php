@@ -17,16 +17,16 @@ trait ControllerTrait
     private function checkLink(string $content, string $href, int $count, Crawler $crawler)
     {
         // Check Link presence
-        $this->assertEquals(
+        if($this->assertEquals(
             $count,
             $crawler->filter('a:contains("' . $content . '")')->count()
-        );
-
-        // Check Link href
-        $this->assertEquals(
-            $href,
-            $crawler->selectLink($content)->link()->getNode()->getAttribute('href')
-        );
+        )) {
+            // Check Link href
+            $this->assertEquals(
+                $href,
+                $crawler->selectLink($content)->link()->getNode()->getAttribute('href')
+            );
+        }
     }
 
     /**

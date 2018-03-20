@@ -6,6 +6,7 @@ parameters:
 services:
     psr_logger:
         class: "Psr\Log\LoggerInterface"
+#      class: "Symfony\Component\EventDispatcher\EventDispatcher"
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

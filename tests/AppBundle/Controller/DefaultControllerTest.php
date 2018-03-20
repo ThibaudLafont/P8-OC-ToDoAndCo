@@ -40,9 +40,16 @@ class DefaultControllerTest extends WebTestCase
         ]);
 
         // Check index display
-        $this->checkIndex($client);
+        $crawler = $this->checkIndex($client);
 
         // TODO : Check non presence of add-user button
+        // Check create-user button non presence
+        $this->checkLink(
+            "Créer un utilisateur",
+            "/users/create",
+            0,
+            $crawler
+        );
     }
 
     /**

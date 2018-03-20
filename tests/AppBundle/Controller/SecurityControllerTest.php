@@ -26,14 +26,6 @@ class SecurityControllerTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
 
-        // Check register link
-        $this->checkLink(
-            "Créer un utilisateur",
-            "/users/create",
-            1,
-            $crawler
-        );
-
         // Check form
         $this->checkForm(
             'form',
