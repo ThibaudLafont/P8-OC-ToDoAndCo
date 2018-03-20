@@ -11,7 +11,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Table("user")
  * @ORM\Entity
- * @UniqueEntity("email")
+ * @UniqueEntity(
+ *     "email",
+ *     message="Cette adresse mail n'est pas disponible."
+ * )
+ * @UniqueEntity(
+ *     "username",
+ *     message="Ce nom d'utilisateur n'est pas disponible."
+ * )
  */
 class User implements UserInterface
 {
