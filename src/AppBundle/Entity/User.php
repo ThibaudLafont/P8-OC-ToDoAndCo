@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Table("user")
  * @ORM\Entity
+ * @ORM\EntityListeners({"AppBundle\EventListener\UserListener"})
  * @UniqueEntity(
  *     "email",
  *     message="Cette adresse mail n'est pas disponible."
@@ -41,6 +42,15 @@ class User implements UserInterface
     private $password;
 
     /**
+     * Store plain password before encoding
+     *
+     * @var string
+     *
+     * @Assert\NotBlank()
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
@@ -49,7 +59,7 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @ORM\Column(name="role", type="string", length=60)
+     * @ORM\Column(name="role", type="string", length=5)
      */
     private $role;
 
@@ -100,6 +110,7 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+        $this->setPlainPassword(null);
     }
 
     /**
@@ -130,5 +141,21 @@ class User implements UserInterface
     public function getRole()
     {
         if($this->role !== null) return $this->role;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
     }
 }

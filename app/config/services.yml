@@ -6,6 +6,13 @@ parameters:
 services:
     psr_logger:
         class: "Psr\Log\LoggerInterface"
+
+    user_listener:
+        class: AppBundle\EventListener\UserListener
+        arguments: ['@Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface']
+        tags:
+            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, entity_manager: custom }
 #      class: "Symfony\Component\EventDispatcher\EventDispatcher"
 #    service_name:
 #        class: AppBundle\Directory\ClassName

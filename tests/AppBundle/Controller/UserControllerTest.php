@@ -348,8 +348,16 @@ class UserControllerTest extends WebTestCase
         $this->checkUserForm($crawler, '/users/1/edit');
     }
 
+    public function testValidUserEditSubmit()
+    {
+        // Request /users/id/edit
+        // Fill form & submit
+        // Verify redirection to /users
+    }
+
     private function checkUserForm(Crawler $crawler, string $action)
     {
+        // Check form
         $this->checkForm(
             'form',
             $action,
