@@ -24,6 +24,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class User implements UserInterface
 {
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -31,12 +33,16 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
      */
     private $username;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=64)
      */
     private $password;
@@ -51,6 +57,8 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
@@ -58,56 +66,107 @@ class User implements UserInterface
     private $email;
 
     /**
+     * Role of user (ADMIN/USER)
+     *
      * @var string
+     *
      * @ORM\Column(name="role", type="string", length=5)
      */
     private $role;
 
+    /**
+     * Get id
+     *
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Get username
+     *
+     * @return string
+     */
     public function getUsername()
     {
         return $this->username;
     }
 
+    /**
+     * Set username
+     *
+     * @param $username string
+     */
     public function setUsername($username)
     {
         $this->username = $username;
     }
 
+    /**
+     * Salt for password encoding
+     *
+     * @return null
+     */
     public function getSalt()
     {
         return null;
     }
 
+    /**
+     * Get password
+     *
+     * @return string
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
+    /**
+     * Set password
+     *
+     * @param $password string
+     */
     public function setPassword($password)
     {
         $this->password = $password;
     }
 
+    /**
+     * Get email
+     *
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
+    /**
+     * Set email
+     *
+     * @param $email User email
+     */
     public function setEmail($email)
     {
         $this->email = $email;
     }
 
-    public function getRoles()
+    /**
+     * Return
+     *
+     * @return array User roles
+     */
+    public function getRoles() : array
     {
         return [UserRole::getValue($this->getRole())];
     }
 
+    /**
+     * Erase credentials after password encode
+     */
     public function eraseCredentials()
     {
         $this->setPlainPassword(null);
@@ -144,7 +203,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * Get plainPassword
+     *
+     * @return string|null
      */
     public function getPlainPassword()
     {
@@ -152,10 +213,16 @@ class User implements UserInterface
     }
 
     /**
+     * Set plainPassword
+     *
      * @param string $plainPassword
+     *
+     * @return $this
      */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }
