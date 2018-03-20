@@ -10,6 +10,7 @@ use Tests\AppBundle\Traits\ControllerTrait;
 class DefaultControllerTest extends WebTestCase
 {
 
+    // Traits
     use ControllerTrait;
 
     /**
@@ -31,6 +32,9 @@ class DefaultControllerTest extends WebTestCase
         $this->checkUnauthorizedMethods("/", ['GET', 'HEAD'], $client);
     }
 
+    /**
+     * Index request with role_user user
+     */
     public function testIndexWithUserCredentials()
     {
         // Create role_user user
@@ -42,7 +46,6 @@ class DefaultControllerTest extends WebTestCase
         // Check index display
         $crawler = $this->checkIndex($client);
 
-        // TODO : Check non presence of add-user button
         // Check create-user button non presence
         $this->checkLink(
             "Créer un utilisateur",
@@ -53,7 +56,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Functionnal Homepage testing with credentials
+     * Functionnal Homepage testing with admin credentials
      */
     public function testIndexWithAdminCredentials()
     {
@@ -75,6 +78,15 @@ class DefaultControllerTest extends WebTestCase
         );
     }
 
+    /**
+     * Request Homepage with given user and check Response content
+     * Include all basic checks attempted by any logged user, special checks
+     * like add-user button are realized in their own test method
+     *
+     * @param Client $client Client for homepage request
+     *
+     * @return Crawler       Crawler storing response content
+     */
     private function checkIndex(Client $client)
     {
         // Check unauthorized methods
@@ -97,6 +109,14 @@ class DefaultControllerTest extends WebTestCase
             "/logout",
             1,
             $crawler
+        );
+
+        // Check title
+        $this->assertEquals(
+            1,
+            $crawler
+                ->filter('h1:contains("Bienvenue sur Todo List, l\'application vous permettant de gérer l\'ensemble de vos tâches sans effort !")')
+                ->count()
         );
 
         // Check if create-task button is present

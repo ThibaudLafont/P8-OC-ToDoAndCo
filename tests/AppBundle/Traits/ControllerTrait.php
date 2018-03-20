@@ -71,6 +71,15 @@ trait ControllerTrait
         }
     }
 
+    /**
+     * Verify presence and attributes of specific form
+     *
+     * @param string $filter    Selector of form
+     * @param string $action    Action attribute value of form
+     * @param string $method    Method attribute value of form
+     * @param int $count        Expected occurences of form
+     * @param Crawler $crawler  Crawler of response
+     */
     private function checkForm(
         string $filter,
         string $action,
@@ -96,6 +105,16 @@ trait ControllerTrait
         );
     }
 
+    /**
+     * Find and check attributes of specific input
+     *
+     * @param string $filter     Selector for input
+     * @param string $type       Type attribute of input
+     * @param string $id         Id of input
+     * @param string $name       Name of input
+     * @param int $count         Expected number of occurences
+     * @param Crawler $crawler   Crawler
+     */
     private function checkInput(
         string $filter,
         string $type,
@@ -127,6 +146,14 @@ trait ControllerTrait
         );
     }
 
+    /**
+     * Check presence and consistence of specific label
+     *
+     * @param string $filter    Selector of label
+     * @param string $for       For attribute of label
+     * @param int $count        Expected number of occurences
+     * @param Crawler $crawler  Crawler
+     */
     private function checkLabel(string $filter, string $for, int $count, Crawler $crawler)
     {
         // Check presence
@@ -160,6 +187,16 @@ trait ControllerTrait
         );
     }
 
+    /**
+     * Create and hydrate form with fields values,
+     * Return build form ready to be submitted
+     *
+     * @param string $buttonValue                  Value of submit button
+     * @param array $fields                        Fields and values in array
+     * @param Crawler $crawler                     Crawler
+     *
+     * @return \Symfony\Component\DomCrawler\Form
+     */
     private function createForm(string $buttonValue, array $fields, Crawler $crawler)
     {
         // Find submit button
