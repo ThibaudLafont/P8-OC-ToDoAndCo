@@ -162,7 +162,116 @@ class UserControllerTest extends WebTestCase
         );
 
         // Check User form
-        // Presence&target
+        $this->checkUserForm($crawler);
+    }
+
+    public function testValidCreateUserSubmitWithCredentials()
+    {
+        // Request /users/create with role_admin user
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleAdmin',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+        $client->followRedirects(true);
+        $crawler = $client->request('GET', '/users/create');
+
+        // Fill&Submit form with invalid datas
+        $form = $this->createUserForm(
+            'test_nouveau',
+            'pommepomme',
+            'pommepomme',
+            'test@gmail.com',
+            'admin',
+            $crawler,
+            true
+        );
+        $crawler = $client->submit($form);
+
+        // Check redirection to /users
+
+        // Check flash-message
+
+        // Check presence of new user
+    }
+
+    private function createUserForm(
+        string $username,
+        string $password,
+        string $passwordRepeat,
+        string $email,
+        string $role,
+        Crawler $crawler,
+        bool $creation
+    )
+    {
+        // Store values in ordered array
+        $fields = [
+            'user[username]' => $username,
+            'user[password][first]' => $password,
+            'user[password][second]' => $passwordRepeat,
+            'user[email]' => $email,
+            'user[role]' => $role
+        ];
+
+        // Define button value
+        $buttonValue = $creation ? 'Ajouter' : 'Modifier';
+
+        // Create and return hydrated form
+        return $this->createForm($buttonValue, $fields, $crawler);
+
+    }
+
+    public function testInvalidCreateUserSubmitWithCredentials()
+    {
+        // Request /users/create with role_admin user
+        // Fill&Submit form with valid datas
+        // Check redirection to /users/create
+        // Check value of valid fields
+        // Check error messages
+    }
+
+    public function testEditUserWithoutCredentials()
+    {
+        // Request /users/id/edit with anon-user & all methods
+        // Check forbidden
+        // Check redirection to /login
+    }
+
+    public function testEditUserWithUserCredentials()
+    {
+        // Request /users/id/edit with role_user user & all methods
+        // Check forbidden
+        // Check redirection to /
+    }
+
+    public function testEditUserDisplayWithAdminCredentials()
+    {
+        // Request /users/id/edit with role_admin user
+        // Check statusCode
+        // Check user-form
+    }
+
+    public function testInvalidEditUserWithAdminCredentials()
+    {
+        // Request /users/id/edit with role_admin user
+        // Fill&Submit form with invalid datas
+        // Check redirection to /users/id/edit
+        // Check flash-message
+        // Check value of valid fields
+        // Check error messages
+    }
+
+    public function testValidEditUserWithAdminCredentials()
+    {
+        // Request /users/id/edit with role_admin user
+        // Fill&Submit form with valid datas
+        // Check redirection to /users
+        // Check flash-message
+        // Check presence of modifications
+    }
+
+    private function checkUserForm(Crawler $crawler)
+    {
         $this->checkForm(
             'form',
             '/users/create',
@@ -271,74 +380,7 @@ class UserControllerTest extends WebTestCase
             $crawler
         );
 
-    }
-
-    public function testInvalidCreateUserActionWithCredentials()
-    {
-        // Request /users/create with role_admin user
-        // Fill&Submit form with invalid datas
-        // Check redirection to /users/create
-        // Check flash-message
-        // Check value of valid fields
-        // Check error messages
-    }
-
-    public function testValidCreateUserActionWithCredentials()
-    {
-        // Request /users/create with role_admin user
-        // Fill&Submit form with valid datas
-        // Check redirection to /users
-        // Check flash-message
-        // Check presence of new user
-    }
-
-    public function testEditUserDisplayWithoutCredentials()
-    {
-        // Request /users/id/edit with anon-user & all methods
-        // Check forbidden
-        // Check redirection to /login
-    }
-
-    public function testEditUserDisplayWithBadCredentials()
-    {
-        // Request /users/id/edit with role_user user & all methods
-        // Check forbidden
-        // Check redirection to /
-    }
-
-    public function testEditUserWithCredentials()
-    {
-        // Request /users/id/edit with role_admin user
-        // Check statusCode
-        // Check user-form
-    }
-
-    public function testInvalidEditUserWithCredentials()
-    {
-        // Request /users/id/edit with role_admin user
-        // Fill&Submit form with invalid datas
-        // Check redirection to /users/id/edit
-        // Check flash-message
-        // Check value of valid fields
-        // Check error messages
-    }
-
-    public function testValidEditUserWithCredentials()
-    {
-        // Request /users/id/edit with role_admin user
-        // Fill&Submit form with valid datas
-        // Check redirection to /users
-        // Check flash-message
-        // Check presence of modifications
-    }
-
-    private function checkUserForm()
-    {
-        // Check form presence&target
-        // Check username input&label
-        // Check password input&label
-        // Check email input&label
-        // Check role input&label
-        // Check submit button (!= edit/add)
+        // Return Crawler for addtionnal checks
+        return $crawler;
     }
 }
