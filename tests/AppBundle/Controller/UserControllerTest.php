@@ -185,40 +185,27 @@ class UserControllerTest extends WebTestCase
             $crawler,
             true
         );
+        $client->followRedirects(true);
         $crawler = $client->submit($form);
 
         // Check redirection to /users
+        $ext = $client->getRequest()->getSchemeAndHttpHost();     // Get host name
+        $this->assertEquals(
+            $ext . '/users',
+            $crawler->getBaseHref()
+        );
 
         // Check flash-message
+        $this->assertEquals(
+            1,
+            $crawler->filter('div.alert-success:contains("L\'utilisateur a bien été ajouté.")')->count()
+        );
 
         // Check presence of new user
-    }
-
-    private function createUserForm(
-        string $username,
-        string $password,
-        string $passwordRepeat,
-        string $email,
-        string $role,
-        Crawler $crawler,
-        bool $creation
-    )
-    {
-        // Store values in ordered array
-        $fields = [
-            'user[username]' => $username,
-            'user[password][first]' => $password,
-            'user[password][second]' => $passwordRepeat,
-            'user[email]' => $email,
-            'user[role]' => $role
-        ];
-
-        // Define button value
-        $buttonValue = $creation ? 'Ajouter' : 'Modifier';
-
-        // Create and return hydrated form
-        return $this->createForm($buttonValue, $fields, $crawler);
-
+        $this->assertEquals(
+            1,
+            $crawler->filter('td:contains("test_nouveau")')->count()
+        );
     }
 
     public function testInvalidCreateUserSubmitWithCredentials()
@@ -382,5 +369,32 @@ class UserControllerTest extends WebTestCase
 
         // Return Crawler for addtionnal checks
         return $crawler;
+    }
+
+    private function createUserForm(
+        string $username,
+        string $password,
+        string $passwordRepeat,
+        string $email,
+        string $role,
+        Crawler $crawler,
+        bool $creation
+    )
+    {
+        // Store values in ordered array
+        $fields = [
+            'user[username]' => $username,
+            'user[password][first]' => $password,
+            'user[password][second]' => $passwordRepeat,
+            'user[email]' => $email,
+            'user[role]' => $role
+        ];
+
+        // Define button value
+        $buttonValue = $creation ? 'Ajouter' : 'Modifier';
+
+        // Create and return hydrated form
+        return $this->createForm($buttonValue, $fields, $crawler);
+
     }
 }
