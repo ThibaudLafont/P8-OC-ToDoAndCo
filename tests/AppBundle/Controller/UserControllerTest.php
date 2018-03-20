@@ -172,12 +172,11 @@ class UserControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'RoleAdmin',
             'PHP_AUTH_PW'   => 'pommepomme',
         ]);
-        $client->followRedirects(true);
         $crawler = $client->request('GET', '/users/create');
 
-        // Fill&Submit form with invalid datas
+        // Fill&Submit form with valid datas
         $form = $this->createUserForm(
-            'test_nouveau',
+            'NouvelUtilisateur',
             'pommepomme',
             'pommepomme',
             'test@gmail.com',
@@ -204,17 +203,86 @@ class UserControllerTest extends WebTestCase
         // Check presence of new user
         $this->assertEquals(
             1,
-            $crawler->filter('td:contains("test_nouveau")')->count()
+            $crawler->filter('td:contains("NouvelUtilisateur")')->count()
         );
     }
 
-    public function testInvalidCreateUserSubmitWithCredentials()
+    public function testInvalidPasswordCreateUserSubmitWithCredentials()
     {
         // Request /users/create with role_admin user
-        // Fill&Submit form with valid datas
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'RoleAdmin',
+            'PHP_AUTH_PW'   => 'pommepomme',
+        ]);
+        $crawler = $client->request('GET', '/users/create');
+
+        // Fill&Submit form with invalid repeat input
+        $form = $this->createUserForm(
+            'NouvelUtilisateur',
+            'pommepomme',
+            'pommepomm',
+            'test@gmail.com',
+            'admin',
+            $crawler,
+            true
+        );
+        $crawler = $client->submit($form);
+
         // Check redirection to /users/create
-        // Check value of valid fields
+        $ext = $client->getRequest()->getSchemeAndHttpHost();     // Get host name
+        $this->assertEquals(
+            $ext . '/users/create',
+            $crawler->getBaseHref()
+        );
+
+        // Check value of fields
+        $this->checkValidFieldsValueAfterInvalidUserFormSubmit(
+            'NouvelUtilisateur',
+            'test@gmail.com',
+            'admin',
+            $crawler
+        );
+
         // Check error messages
+        $this->assertEquals(
+            1,
+            $crawler->filter('span.help-block:contains("Les deux mots de passe doivent correspondre.")')->count()
+        );
+    }
+
+    private function checkValidFieldsValueAfterInvalidUserFormSubmit(
+        string $username = '',
+        string $email = '',
+        string $role = '',
+        Crawler $crawler
+    )
+    {
+        // Username
+        $this->assertEquals(
+            $username,
+            $crawler->filter('input#user_username')->first()->attr('value')
+        );
+        // Password
+        $this->assertEquals(
+            '',
+            $crawler->filter('input#user_password_first')->first()->attr('value')
+        );
+        // Repeat Password
+        $this->assertEquals(
+            '',
+            $crawler->filter('input#user_password_second')->first()->attr('value')
+        );
+        // Email
+        $this->assertEquals(
+            $email,
+            $crawler->filter('input#user_email')->first()->attr('value')
+        );
+        // Role
+        $this->assertEquals(
+            $role,
+            $crawler->filter('option[selected]')->first()->attr('value')
+        );
+
     }
 
     public function testEditUserWithoutCredentials()
