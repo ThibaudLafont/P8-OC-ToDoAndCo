@@ -1,7 +1,7 @@
 <?php
 namespace Test\Functionnal\StatusCode;
 
-class Task extends StatusCode
+class TaskTest extends StatusCode
 {
 
     public function testTaskListWithAnon() {}

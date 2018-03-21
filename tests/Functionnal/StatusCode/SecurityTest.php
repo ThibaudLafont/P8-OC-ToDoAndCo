@@ -1,7 +1,7 @@
 <?php
 namespace Test\Functionnal\StatusCode;
 
-class Security extends StatusCode
+class SecurityTest extends StatusCode
 {
 
     public function testLoginWithAnon() {}

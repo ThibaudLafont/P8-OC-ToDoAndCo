@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Functionnal\StatusCode;
 
-class Homepage extends StatusCode
+class HomepageTest extends StatusCode
 {
 
     /**

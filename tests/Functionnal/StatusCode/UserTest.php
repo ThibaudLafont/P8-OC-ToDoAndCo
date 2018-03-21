@@ -1,7 +1,7 @@
 <?php
 namespace Test\Functionnal\StatusCode;
 
-class User extends StatusCode
+class UserTest extends StatusCode
 {
 
     public function testUserListWithAnon() {}
