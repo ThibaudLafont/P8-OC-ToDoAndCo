@@ -70,7 +70,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      */
     public function toggleTaskAction(Task $task)
     {
@@ -84,7 +84,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      */
     public function deleteTaskAction(Task $task)
     {
