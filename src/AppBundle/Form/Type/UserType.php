@@ -45,6 +45,7 @@ class UserType extends AbstractType
                 'role',
                 ChoiceType::class,
                 [
+                    'label' => 'Type d\'utilisateur',
                     'required' => true,
                     'placeholder' => '-- Role de l\'utilisateur --',
                     'choices' => [

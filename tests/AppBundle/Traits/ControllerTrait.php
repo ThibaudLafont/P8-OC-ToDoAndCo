@@ -235,4 +235,19 @@ trait ControllerTrait
 
     }
 
+    private function createUser(string $type)
+    {
+        // Check type
+        if(in_array($type, ['admin', 'user'])){
+            // Generate username
+            $username = 'Role' . ucfirst($type);
+
+            // Create and return client
+            return static::createClient([], [
+                'PHP_AUTH_USER' => $username,
+                'PHP_AUTH_PW'   => 'pommepomme',
+            ]);
+        }
+    }
+
 }

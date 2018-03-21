@@ -32,10 +32,7 @@ class TaskControllerTest extends WebTestCase
     public function testListTasksWithUserCredentials()
     {
         // Request path with authenticated role_user user
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleUser',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        $client = $this->createUser('user');
 
         // Check Task list
         $crawler = $this->checkTaskList($client);

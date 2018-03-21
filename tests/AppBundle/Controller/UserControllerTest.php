@@ -36,10 +36,7 @@ class UserControllerTest extends WebTestCase
     public function testListUsersWithUserCredentials()
     {
         // Create role_user user
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleUser',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        $client = $this->createUser('user');
         // GET request
         $client->request('GET', '/users');
         // Check 403
@@ -54,11 +51,9 @@ class UserControllerTest extends WebTestCase
 
     public function testListUsersWithAdminCredentials()
     {
-        // Create role_admin user and request /users
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleAdmin',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        // Create role_admin user
+        $client = $this->createUser('admin');
+        // Request /users
         $crawler = $client->request('GET', '/users');
 
         // Check statusCode
@@ -120,10 +115,7 @@ class UserControllerTest extends WebTestCase
     public function testCreateUserWithUserCredentials()
     {
         // Create role_user user
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleUser',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        $client = $this->createUser('user');
         // GET request
         $client->request('GET', '/users/create');
 
@@ -139,11 +131,9 @@ class UserControllerTest extends WebTestCase
 
     public function testCreateUserDisplayWithAdminCredentials()
     {
-        // Create role_admin user and request /users
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleAdmin',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        // Create role_admin user
+        $client = $this->createUser('admin');
+        // Request /users
         $crawler = $client->request('GET', '/users/create');
 
         // Check statusCode
@@ -167,11 +157,9 @@ class UserControllerTest extends WebTestCase
 
     public function testValidCreateUserSubmitWithCredentials()
     {
-        // Request /users/create with role_admin user
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleAdmin',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        // Create role_admin user
+        $client = $this->createUser('admin');
+        // Request /users/create
         $crawler = $client->request('GET', '/users/create');
 
         // Fill&Submit form with valid datas
@@ -312,10 +300,7 @@ class UserControllerTest extends WebTestCase
     public function testEditUserWithUserCredentials()
     {
         // Create role_user user
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleUser',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        $client = $this->createUser('user');
         // GET request
         $client->request('GET', '/users/1/edit');
 
@@ -331,11 +316,9 @@ class UserControllerTest extends WebTestCase
 
     public function testEditUserDisplayWithAdminCredentials()
     {
-        // Request /users/id/edit with role_admin user
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleAdmin',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        // Create role_admin user
+        $client = $this->createUser('admin');
+        // Request /users/id/edit
         $crawler = $client->request('GET', '/users/1/edit');
 
         // Check statusCode
@@ -499,11 +482,9 @@ class UserControllerTest extends WebTestCase
 
     private function submitAndCheckInvalidUserCreateForm(array $fields)
     {
-        // Request /users/create with role_admin user
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'RoleAdmin',
-            'PHP_AUTH_PW'   => 'pommepomme',
-        ]);
+        // Create role_admin user
+        $client = $this->createUser('admin');
+        // Request /users/create
         $crawler = $client->request('GET', '/users/create');
 
         // Fill&Submit form with invalid repeat input
