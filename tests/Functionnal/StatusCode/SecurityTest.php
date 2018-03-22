@@ -73,6 +73,9 @@ class SecurityTest extends StatusCode
         );
     }
 
+    /**
+     * Test request /logout with anon user
+     */
     public function testLogoutWithAnon() {
         // Create anon client
         $client = $this->createAnonClient();
@@ -92,6 +95,10 @@ class SecurityTest extends StatusCode
             $client
         );
     }
+
+    /**
+     * Test request /logout with role_user user
+     */
     public function testLogoutWithUser() {
         // Create role_user client
         $client = $this->createRoleUserClient();
@@ -111,6 +118,10 @@ class SecurityTest extends StatusCode
             $client
         );
     }
+
+    /**
+     * Test request /logout with role_admin user
+     */
     public function testLogoutWithAdmin() {
         // Create role_user client
         $client = $this->createRoleAdminClient();
