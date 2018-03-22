@@ -22,6 +22,7 @@ trait RenderChecker
             $crawler->filter('a:contains("' . $content . '")')->count()
         );
 
+
         // Check Link href value
         $this->assertEquals(
             $href,
@@ -96,7 +97,6 @@ trait RenderChecker
     /**
      * Find and check attributes of specific input
      *
-     * @param string $filter     Selector for input
      * @param string $type       Type attribute of input
      * @param string $id         Id of input
      * @param string $name       Name of input

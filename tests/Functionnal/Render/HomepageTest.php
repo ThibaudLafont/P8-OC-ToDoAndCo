@@ -44,6 +44,14 @@ class HomepageTest extends BaseLayout
             $crawler
         );
 
+        // Check Main_Img img
+        $this->checkImg(
+            'todo list',
+            '/img/todolist_homepage.jpg',
+            1,
+            $crawler
+        );
+
         // Check add-task link
         $this->checkLink(
             'Créer une nouvelle tâche',

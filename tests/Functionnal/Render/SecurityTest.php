@@ -19,6 +19,14 @@ class SecurityTest extends BaseLayout
     }
 
     private function checkLoginBaseLayout(Crawler $crawler) {
+        // Check Main_Img img
+        $this->checkImg(
+            'todo list',
+            '/img/todolist_homepage.jpg',
+            1,
+            $crawler
+        );
+
         // Check form
         $this->checkForm(
             '/login_check',

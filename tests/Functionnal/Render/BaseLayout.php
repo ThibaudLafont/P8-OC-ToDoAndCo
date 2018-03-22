@@ -23,6 +23,7 @@ abstract class BaseLayout extends WebTestCase
             1,
             $crawler
         );
+
         // Check OC logo img
         $this->checkImg(
             'OpenClassrooms',
@@ -30,13 +31,7 @@ abstract class BaseLayout extends WebTestCase
             1,
             $crawler
         );
-        // Check Main_Img img
-        $this->checkImg(
-            'todo list',
-            '/img/todolist_homepage.jpg',
-            1,
-            $crawler
-        );
+
         // Check Copyright
         $this->assertEquals(
             1,

@@ -147,6 +147,17 @@ class TaskTest extends StatusCode
     public function testTaskToggleWithUser() {}
     public function testTaskToggleWithAdmin() {}
 
+    public function testTaskEditWithAnon() {}
+
+    public function testAnonTaskEditWithUser() {}
+    public function testAnonTaskEditWithAdmin() {}
+
+    public function testOwnedTaskEditWithUser() {}
+    public function testOwnedTaskEditWithAdmin() {}
+
+    public function testNotOwnedTaskEditWithUser() {}
+    public function testNotOwnedTaskEditWithAdmin() {}
+
     public function testTaskDeleteWithAnon() {}
 
     public function testAnonTaskDeleteWithUser() {}
