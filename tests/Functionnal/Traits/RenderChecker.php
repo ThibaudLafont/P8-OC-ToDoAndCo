@@ -19,14 +19,7 @@ trait RenderChecker
         // Check Link presence
         $this->assertEquals(
             $count,
-            $crawler->filter('a:contains("' . $content . '")')->count()
-        );
-
-
-        // Check Link href value
-        $this->assertEquals(
-            $href,
-            $crawler->selectLink($content)->link()->getNode()->getAttribute('href')
+            $crawler->filter('a[href="' . $href . '"]:contains("' . $content . '")')->count()
         );
     }
 
@@ -97,18 +90,20 @@ trait RenderChecker
     /**
      * Find and check attributes of specific input
      *
-     * @param string $type       Type attribute of input
-     * @param string $id         Id of input
-     * @param string $name       Name of input
-     * @param int $count         Expected number of occurences
-     * @param Crawler $crawler   Crawler
+     * @param string $type        Type attribute of input
+     * @param string $id          Id of input
+     * @param string $name        Name of input
+     * @param int $count          Expected number of occurences
+     * @param Crawler $crawler    Crawler
+     * @param string|null $value  Value of input if edit or invalid submit
      */
     protected function checkInput(
         string $type,
         string $id,
         string $name,
         int $count,
-        Crawler $crawler
+        Crawler $crawler,
+        string $value = null
     )
     {
         // Check input presence and id value
@@ -128,6 +123,14 @@ trait RenderChecker
             $name,
             $crawler->filter('input#' . $id)->first()->attr('name')
         );
+
+        // If value inquired, check input value
+        if(!is_null($value)) {
+            $this->assertEquals(
+                $value,
+                $crawler->filter('input#' . $id)->first()->attr('value')
+            );
+        }
     }
 
     protected function checkButton(string $content, string $type, int $count, Crawler $crawler)
