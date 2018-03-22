@@ -36,14 +36,12 @@ class HomepageTest extends BaseLayout
         $this->checkHomepageBaseLayout($crawler);
     }
 
-    protected function checkHomepageBaseLayout(Crawler $crawler) {
+    private function checkHomepageBaseLayout(Crawler $crawler) {
         // Check title
-        $titleContent = "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !";
-        $this->assertEquals(
+        $this->checkTitle(
+            "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !",
             1,
             $crawler
-                ->filter('h1:contains("' . $titleContent . '")')
-                ->count()
         );
 
         // Check add-task link
@@ -70,5 +68,4 @@ class HomepageTest extends BaseLayout
             $crawler
         );
     }
-
 }
