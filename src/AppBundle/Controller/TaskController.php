@@ -30,15 +30,17 @@ class TaskController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        if($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
 
-            $em->persist($task);
-            $em->flush();
+                $em->persist($task);
+                $em->flush();
 
-            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+                $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
-            return $this->redirectToRoute('task_list');
+                return $this->redirectToRoute('task_list');
+            }
         }
 
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
@@ -54,12 +56,14 @@ class TaskController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if($form->isSubmitted()){
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash('success', 'La tâche a bien été modifiée.');
+                $this->addFlash('success', 'La tâche a bien été modifiée.');
 
-            return $this->redirectToRoute('task_list');
+                return $this->redirectToRoute('task_list');
+            }
         }
 
         return $this->render('task/edit.html.twig', [
@@ -70,7 +74,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      */
     public function toggleTaskAction(Task $task)
     {
@@ -84,7 +88,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      */
     public function deleteTaskAction(Task $task)
     {
