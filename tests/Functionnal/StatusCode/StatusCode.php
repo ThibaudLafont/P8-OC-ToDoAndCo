@@ -15,7 +15,7 @@ abstract class StatusCode extends WebTestCase
      * Request given URL and check response status code
      *
      * @param string $url       URL to request
-     * @param string $method    Method for request
+     * @param array $methods    Methods for requests
      * @param int $expectStatus Expected status code
      * @param Client $client    Client for request URL
      *
@@ -23,20 +23,24 @@ abstract class StatusCode extends WebTestCase
      */
     protected function checkResponseStatusCode(
         string $url,
-        string $method,
+        array $methods,
         int $expectStatus,
         Client $client
     ) {
 
-        // Request target
-        $client->request($method, $url);
+        // loop on every method
+        foreach($methods as $method){
+            // Request target
+            $client->request($method, $url);
 
-        // Check status code
-        $this->assertEquals(
-            $expectStatus,
-            $client->getResponse()->getStatusCode()
-        );
+            // Check status code
+            $this->assertEquals(
+                $expectStatus,
+                $client->getResponse()->getStatusCode()
+            );
+        }
 
+        // Return Client
         return $client;
     }
 
@@ -44,35 +48,37 @@ abstract class StatusCode extends WebTestCase
      * Check redirection status code and destination
      * Execute $this->checkResponseStatusCode
      *
-     * @param string $requestedUrl    URL for request
+     * @param string $requestedUrl    URL for requests
      * @param string $redirectionUrl  Attempted redirection url
-     * @param string $method          Method for request
-     * @param Client $client          Client for request
+     * @param array  $methods         Methods for requests
+     * @param Client $client          Client for requests
      *
      * @return Client                 For additional checks
      */
     protected function checkRedirection(
         string $requestedUrl,
         string $redirectionUrl,
-        string $method,
+        array $methods,
         Client $client
     )
     {
 
-        // Check 302 status code at request
-        $client = $this->checkResponseStatusCode(
-            $requestedUrl,
-            $method,
-            302,
-            $client
-        );
+        foreach($methods as $method) {
+            // Check 302 status code at request
+            $this->checkResponseStatusCode(
+                $requestedUrl,
+                [$method],
+                302,
+                $client
+            );
 
-        // Store host
-        $host = $client->getRequest()->getSchemeAndHttpHost();
-        // Check redirection to given url
-        $this->assertTrue(
-            $client->getResponse()->isRedirect($host . $redirectionUrl)
-        );
+            // Store host
+            $host = $client->getRequest()->getSchemeAndHttpHost();
+            // Check redirection to given url
+            $this->assertTrue(
+                $client->getResponse()->isRedirect($host . $redirectionUrl)
+            );
+        }
 
         return $client;
     }

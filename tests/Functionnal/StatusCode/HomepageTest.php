@@ -17,7 +17,7 @@ class HomepageTest extends StatusCode
         $this->checkRedirection(
             '/',
             '/login',
-            'GET',
+            ['GET'],
             $client
         );
 
@@ -42,7 +42,7 @@ class HomepageTest extends StatusCode
         // Request / by GET and expect 200
         $this->checkResponseStatusCode(
             '/',
-            'GET',
+            ['GET'],
             200,
             $client
         );
@@ -68,7 +68,7 @@ class HomepageTest extends StatusCode
         // Request / by GET and expect 200 status
         $this->checkResponseStatusCode(
             '/',
-            'GET',
+            ['GET'],
             200,
             $client
         );
