@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Entity\Enumerations;
 
+use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
+
 class UserRole
 {
 
@@ -43,7 +45,7 @@ class UserRole
     public static function getValue(string $key) : string
     {
         if (!isset(static::$values[$key])) {
-            return "Unknow " . get_called_class();
+            throw new InvalidTypeException("Unknow " . get_called_class());
         } else {
             return static::$values[$key];
         }

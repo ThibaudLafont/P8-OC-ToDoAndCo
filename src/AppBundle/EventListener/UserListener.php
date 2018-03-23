@@ -2,7 +2,6 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\User;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
