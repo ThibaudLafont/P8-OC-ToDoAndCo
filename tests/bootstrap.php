@@ -1,4 +1,5 @@
 <?php
+// Functional testing => attempt same index at each test launch
 if (isset($_ENV['BOOTSTRAP_LOAD_DB_TEST'])) {
     // Clear cache
     passthru(

@@ -13,27 +13,27 @@
             </div>
         {% endif %}
         {% for task in tasks %}
-        <div class="col-sm-4 col-lg-4 col-md-4 task-parent">
+        <div class="col-sm-4 col-lg-4 col-md-4 task-item">
             <div class="thumbnail">
-                <div class="caption task-content">
-                    <h4 class="pull-right">
+                <div class="caption task-item-content">
+                    <div class="pull-right">
                         {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
-                    </h4>
+                    </div>
                     <h4><a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a></h4>
-                    <em>
+                    <em class="author">
                         Posté par {{ task.userUsername }}
                     </em>
-                    <p>{{ task.content }}</p>
+                    <p class="task-content">{{ task.content }}</p>
                 </div>
                 <div class="task-actions">
-                    <form action="{{ path('task_toggle', {'id' : task.id }) }}">
-                        <button class="btn btn-success btn-sm pull-right">
+                    <form class= "toggle-task" action="{{ path('task_toggle', {'id' : task.id }) }}">
+                        <button type="submit" class="btn btn-success btn-sm pull-right">
                             {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
                         </button>
                     </form>
                     {% if is_granted('delete', task) %}
                         <form action="{{ path('task_delete', {'id' : task.id }) }}">
-                            <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+                            <button type="submit" class="btn btn-danger btn-sm pull-right">Supprimer</button>
                         </form>
                     {% endif %}
                 </div>
