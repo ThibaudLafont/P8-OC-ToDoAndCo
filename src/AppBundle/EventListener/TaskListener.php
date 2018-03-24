@@ -61,8 +61,11 @@ class TaskListener
         // Get the session
         $session = $this->getTokenStorage()->getToken();
 
-        // Assign the user to the trick
-        $task->setUser($session->getUser());
+        // If session is null, Event is called by Fixtures, doen't want assignation
+        if(!is_null($session)) {
+            // Assign the user to the trick
+            $task->setUser($session->getUser());
+        }
     }
 
     /**
