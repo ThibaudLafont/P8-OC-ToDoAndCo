@@ -38,7 +38,7 @@ class UserType extends AbstractType
                 EmailType::class,
                 [
                     'label' => 'Adresse email',
-                    'required' => true
+                    'required' => true,
                 ]
             )
             ->add(

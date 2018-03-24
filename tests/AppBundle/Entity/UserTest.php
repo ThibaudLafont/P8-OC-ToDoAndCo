@@ -46,4 +46,5 @@ class UserTest extends TestCase
             ['user',  'ROLE_USER' ]
         ];
     }
+
 }

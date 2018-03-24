@@ -91,7 +91,6 @@ class UserController extends Controller
         if($form->isSubmitted()) {
             // Check if datas are valid
             if ($form->isValid()) {
-
                 // Flush modifications
                 $em = $this->getDoctrine()->getManager();
                 $em->flush();
