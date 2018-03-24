@@ -116,4 +116,10 @@ class Task
     {
         $this->user = $user;
     }
+
+    public function getUserUsername()
+    {
+        if(is_null($this->getUser())) return 'Anonymous';
+        else return $this->getUser()->getUsername();
+    }
 }
