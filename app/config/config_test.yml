@@ -8,6 +8,14 @@ framework:
     profiler:
         collect: false
 
+doctrine:
+    dbal:
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%db_test_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+
 web_profiler:
     toolbar: false
     intercept_redirects: false
