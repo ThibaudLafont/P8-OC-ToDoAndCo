@@ -11,7 +11,7 @@ services:
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
-        exclude: '../../src/AppBundle/{Entity,Repository}'
+        exclude: '../../src/AppBundle/{Repository}'
 
     event_dispatcher:
         class: 'Symfony\Component\EventDispatcher\EventDispatcher'

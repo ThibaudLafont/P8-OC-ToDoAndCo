@@ -67,7 +67,7 @@ class TaskVoter extends Voter
             $user->getRole() === 'admin'
         ) return true;
 
-        // If owned task and logged user = task owner, authorize
+        // If owned task and logged user === task owner, authorize
         if($task->getUser() === $user) return true;
 
         // In other cases, don't authorize
