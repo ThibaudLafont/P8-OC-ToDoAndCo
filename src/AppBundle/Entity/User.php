@@ -55,7 +55,9 @@ class User implements UserInterface
      *
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message = "Veuillez renseigner un mot de passe"
+     * )
      */
     private $plainPassword;
 
@@ -74,6 +76,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=5)
+     * @Assert\NotBlank(message="Choisissez un type d'utilisateur")
      */
     private $role;
 

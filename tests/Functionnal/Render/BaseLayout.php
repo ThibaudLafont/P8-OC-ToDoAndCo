@@ -45,6 +45,7 @@ abstract class BaseLayout extends WebTestCase
     protected function checkUserBaseLayout(Crawler $crawler)  {
         // Check anonBaseLayout
         $this->checkAnonBaseLayout($crawler);
+
         // Check Logout link
         $this->checkLink(
             'Se déconnecter',
