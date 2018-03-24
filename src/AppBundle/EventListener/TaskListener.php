@@ -2,13 +2,10 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Task;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class TaskListener
- *
- * Execute actions when Doctrine work with Messages entities
  *
  * @package AppBundle\EventListener
  */
@@ -32,6 +29,7 @@ class TaskListener
     {
         $this->setTokenStorage($tokenStorage);
     }
+
     /**
      * Task persist
      *
@@ -39,14 +37,37 @@ class TaskListener
      */
     public function prePersist(Task $task)
     {
-        // Get the session
-        $session = $this->tokenStorage->getToken();
-
-        // Assign the user to the trick
-       $task->setUser($session->getUser());
+        $this->assignUser($task);
     }
 
     /**
+     * If Task is anonymous, assign logged User
+     *
+     * @param Task $task
+     */
+    public function preFlush(Task $task)
+    {
+        // If task was an Anon one, assign logged User
+        if (is_null($task->getUser())) $this->assignUser($task);
+    }
+
+    /**
+     * Assign logged User as Task author
+     *
+     * @param Task $task
+     */
+    private function assignUser(Task $task)
+    {
+        // Get the session
+        $session = $this->getTokenStorage()->getToken();
+
+        // Assign the user to the trick
+        $task->setUser($session->getUser());
+    }
+
+    /**
+     * Get tokenStorage
+     *
      * @return TokenStorageInterface
      */
     public function getTokenStorage(): TokenStorageInterface
@@ -55,6 +76,8 @@ class TaskListener
     }
 
     /**
+     * Set TokenStorage
+     *
      * @param TokenStorageInterface $tokenStorage
      */
     public function setTokenStorage(TokenStorageInterface $tokenStorage)
