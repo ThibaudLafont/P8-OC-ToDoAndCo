@@ -69,7 +69,7 @@ class UserTest extends BaseLayout
         // Expected values (from db_test)
         $user = [
             'username' => 'RoleAdmin',
-            'email'    => 'roleadmintest@gmail.com',
+            'email'    => 'roleadmin@gmail.com',
             'role'     => 'Administrateur'
         ];
 
