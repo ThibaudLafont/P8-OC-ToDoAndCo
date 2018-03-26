@@ -1,7 +1,6 @@
 <?php
 namespace Tests\Functionnal\StatusCode\User;
 
-use Symfony\Bundle\FrameworkBundle\Client;
 use Tests\Functionnal\StatusCode\StatusCode;
 
 class UserCreateTest extends StatusCode

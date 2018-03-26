@@ -1,21 +1,20 @@
 <?php
-namespace Tests\Functionnal\StatusCode\User;
+namespace Tests\Functionnal\StatusCode\Task;
 
 use Tests\Functionnal\StatusCode\StatusCode;
 
-class UserListTest extends StatusCode
+class TaskListTest extends StatusCode
 {
-
     /**
-     * Request user_list with anon client
+     * Check status codes when request task_list with anon client
      */
-    public function testUserListWithAnon() {
+    public function testTaskListWithAnon() {
         // Create Client
         $client = $this->createAnonClient();
 
-        // Request user_list by GET and expect 302
+        // Request task_list and expect 302
         $this->checkRedirection(
-            '/users',
+            '/tasks',
             '/login',
             ['GET'],
             $client
@@ -23,31 +22,15 @@ class UserListTest extends StatusCode
     }
 
     /**
-     * Request users_list with role_user client
+     * Check status codes when request task_list with role_user client
      */
-    public function testUserListWithUser() {
-        // Create role_user Client
+    public function testTaskListWithUser() {
+        // Create Client
         $client = $this->createRoleUserClient();
 
-        // Request users_list by GET and expect 403
+        // Request task_list and expect 200
         $this->checkResponseStatusCode(
-            '/users',
-            ['GET'],
-            403,
-            $client
-        );
-    }
-
-    /**
-     * Request users_list with role_admin client
-     */
-    public function testUserListWithAdmin() {
-        // Create Client
-        $client = $this->createRoleAdminClient();
-
-        // Check 200 return when GET request
-        $this->checkResponseStatusCode(
-            '/users',
+            '/tasks',
             ['GET'],
             200,
             $client
@@ -55,14 +38,29 @@ class UserListTest extends StatusCode
     }
 
     /**
-     * Check all forbidden methods for user_list with all user types
+     * Check status codes when request task_list with role_admin client
+     */
+    public function testTaskListWithAdmin() {
+        // Create Client
+        $client = $this->createRoleAdminClient();
+
+        // Request task_list and expect 200
+        $this->checkResponseStatusCode(
+            '/tasks',
+            ['GET'],
+            200,
+            $client
+        );
+    }
+
+    /**
+     * Check all other methods are forbidden for task_list
      */
     public function testUserListForbiddenMethods()
     {
         $this->checkForbiddenMethodsWithAllUserTypes(
-            '/users',
+            '/tasks',
             ['GET']
         );
     }
-
 }

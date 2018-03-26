@@ -1,20 +1,20 @@
 <?php
-namespace Tests\Functionnal\StatusCode\User;
+namespace Tests\Functionnal\StatusCode\Task;
 
 use Tests\Functionnal\StatusCode\StatusCode;
 
-class UserEditTest extends StatusCode
+class TaskCreateTest extends StatusCode
 {
     /**
-     * Request user_edit with anon client
+     * Check status codes when request task_create with anon client
      */
-    public function testUserEditWithAnon() {
+    public function testTaskCreateWithAnon() {
         // Create Client
         $client = $this->createAnonClient();
 
-        // Request user_edit by GET&POST and expect 302
+        // Request task_list and expect 302
         $this->checkRedirection(
-            '/users/1/edit',
+            '/tasks/create',
             '/login',
             ['GET', 'POST'],
             $client
@@ -22,31 +22,15 @@ class UserEditTest extends StatusCode
     }
 
     /**
-     * Request user_edit with role_user client
+     * Check status codes when request task_create with role_user client
      */
-    public function testUserEditWithUser() {
+    public function testTaskCreateWithUser() {
         // Create Client
         $client = $this->createRoleUserClient();
 
-        // Request in GET&POST and expect 403
+        // Request task_list and expect 200
         $this->checkResponseStatusCode(
-            '/users/1/edit',
-            ['GET', 'POST'],
-            403,
-            $client
-        );
-    }
-
-    /**
-     * Request user_edit with role_admin client
-     */
-    public function testUserEditWithAdmin() {
-        // Create Client
-        $client = $this->createRoleAdminClient();
-
-        // Request by GET&POST and expect 200
-        $this->checkResponseStatusCode(
-            '/users/1/edit',
+            '/tasks/create',
             ['GET', 'POST'],
             200,
             $client
@@ -54,12 +38,28 @@ class UserEditTest extends StatusCode
     }
 
     /**
-     * Check all forbidden methods for user_edit with all user types
+     * Check status codes when request task_create with role_admin client
      */
-    public function testUserCreateForbiddenMethods()
+    public function testTaskCreateWithAdmin() {
+        // Create Client
+        $client = $this->createRoleAdminClient();
+
+        // Request task_list and expect 200
+        $this->checkResponseStatusCode(
+            '/tasks/create',
+            ['GET', 'POST'],
+            200,
+            $client
+        );
+    }
+
+    /**
+     * Check all unauthorized methods
+     */
+    public function testTaskCreateForbiddenMethods()
     {
         $this->checkForbiddenMethodsWithAllUserTypes(
-            '/users/1/edit',
+            '/tasks/create',
             ['GET', 'POST']
         );
     }

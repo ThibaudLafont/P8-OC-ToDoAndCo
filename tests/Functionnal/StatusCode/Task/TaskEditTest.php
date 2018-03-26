@@ -1,20 +1,20 @@
 <?php
-namespace Tests\Functionnal\StatusCode\User;
+namespace Tests\Functionnal\StatusCode\Task;
 
 use Tests\Functionnal\StatusCode\StatusCode;
 
-class UserEditTest extends StatusCode
+class TaskEditTest extends StatusCode
 {
     /**
-     * Request user_edit with anon client
+     * Request task_edit with anonymous user
      */
-    public function testUserEditWithAnon() {
+    public function testTaskEditWithAnon() {
         // Create Client
         $client = $this->createAnonClient();
 
-        // Request user_edit by GET&POST and expect 302
+        // Request Edit and expect redirection
         $this->checkRedirection(
-            '/users/1/edit',
+            '/tasks/2/edit',
             '/login',
             ['GET', 'POST'],
             $client
@@ -22,31 +22,15 @@ class UserEditTest extends StatusCode
     }
 
     /**
-     * Request user_edit with role_user client
+     * Request task_edit with role_user user
      */
-    public function testUserEditWithUser() {
+    public function testTaskEditWithUser() {
         // Create Client
         $client = $this->createRoleUserClient();
 
-        // Request in GET&POST and expect 403
+        // Request edit and expect 200
         $this->checkResponseStatusCode(
-            '/users/1/edit',
-            ['GET', 'POST'],
-            403,
-            $client
-        );
-    }
-
-    /**
-     * Request user_edit with role_admin client
-     */
-    public function testUserEditWithAdmin() {
-        // Create Client
-        $client = $this->createRoleAdminClient();
-
-        // Request by GET&POST and expect 200
-        $this->checkResponseStatusCode(
-            '/users/1/edit',
+            '/tasks/2/edit',
             ['GET', 'POST'],
             200,
             $client
@@ -54,12 +38,28 @@ class UserEditTest extends StatusCode
     }
 
     /**
-     * Check all forbidden methods for user_edit with all user types
+     * Test task_edit with role_admin user
      */
-    public function testUserCreateForbiddenMethods()
+    public function testTaskEditWithAdmin() {
+        // Create Client
+        $client = $this->createRoleAdminClient();
+
+        // Request edit and expect 200
+        $this->checkResponseStatusCode(
+            '/tasks/2/edit',
+            ['GET', 'POST'],
+            200,
+            $client
+        );
+    }
+
+    /**
+     * Check all unauthorized methods
+     */
+    public function testTaskListForbiddenMethods()
     {
         $this->checkForbiddenMethodsWithAllUserTypes(
-            '/users/1/edit',
+            '/tasks/2/edit',
             ['GET', 'POST']
         );
     }
