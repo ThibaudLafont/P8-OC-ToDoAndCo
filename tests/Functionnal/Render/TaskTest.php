@@ -6,8 +6,11 @@ use Symfony\Component\DomCrawler\Crawler;
 class TaskTest extends BaseLayout
 {
 
+    /**
+     * Test render of Task list with role_user
+     */
     public function testListRenderWithUser() {
-        // Create Client
+        // Create Client and request
         $client = $this->createRoleUserClient();
         $crawler = $client->request('GET', '/tasks');
 
@@ -22,7 +25,12 @@ class TaskTest extends BaseLayout
         $this->checkDeleteForm(1, $crawler);
 
     }
+
+    /**
+     * Test render Task list with role_admin
+     */
     public function testListRenderWithAdmin(){
+        // Create Client and request /tasks
         $client = $this->createRoleAdminClient();
         $crawler = $client->request('GET', '/tasks');
 
@@ -42,6 +50,11 @@ class TaskTest extends BaseLayout
     public function testCreateRenderWithUser() {}
     public function testCreateRenderWithAdmin(){}
 
+    /**
+     * Task list base layout check
+     *
+     * @param Crawler $crawler Crawler to check
+     */
     private function checkListBaseLayout(Crawler $crawler) {
         // Main_Img
         $this->checkImg(
@@ -71,8 +84,11 @@ class TaskTest extends BaseLayout
         $this->checkTaskItemDiv($tasks);
     }
 
-    private function checkCreateBaseLayout() {}
-
+    /**
+     * Check task item render from filtered Crawler
+     *
+     * @param $tasks Filtered Crawler (containing task items)
+     */
     private function checkTaskItemDiv($tasks) {
         // Loop on every task-item
         $tasks->each(function($node, $i){
@@ -104,6 +120,12 @@ class TaskTest extends BaseLayout
         });
     }
 
+    /**
+     * Check presence and number of delete forms in Task list
+     *
+     * @param int $count       Attempted number of delete forms
+     * @param Crawler $crawler Crawler to check
+     */
     private function checkDeleteForm(int $count, Crawler $crawler)
     {
         // Check Nbre of delete forms
@@ -112,5 +134,7 @@ class TaskTest extends BaseLayout
             $crawler->filter('button:contains("Supprimer")')->count()
         );
     }
+
+    private function checkCreateBaseLayout() {}
 
 }

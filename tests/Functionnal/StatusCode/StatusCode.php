@@ -48,18 +48,20 @@ abstract class StatusCode extends WebTestCase
      * Check redirection status code and destination
      * Execute $this->checkResponseStatusCode
      *
-     * @param string $requestedUrl    URL for requests
-     * @param string $redirectionUrl  Attempted redirection url
-     * @param array  $methods         Methods for requests
-     * @param Client $client          Client for requests
+     * @param string $requestedUrl URL for requests
+     * @param string $redirectionUrl Attempted redirection url
+     * @param array $methods Methods for requests
+     * @param Client $client Client for requests
+     * @param bool $absolute Does redirection attempt absolute URL
      *
-     * @return Client                 For additional checks
+     * @return Client For additional checks
      */
     protected function checkRedirection(
         string $requestedUrl,
         string $redirectionUrl,
         array $methods,
-        Client $client
+        Client $client,
+        bool $relative = false
     )
     {
 
@@ -73,7 +75,9 @@ abstract class StatusCode extends WebTestCase
             );
 
             // Store host
-            $host = $client->getRequest()->getSchemeAndHttpHost();
+            if($relative) $host = '';
+            else          $host = $client->getRequest()->getSchemeAndHttpHost();
+
             // Check redirection to given url
             $this->assertTrue(
                 $client->getResponse()->isRedirect($host . $redirectionUrl)

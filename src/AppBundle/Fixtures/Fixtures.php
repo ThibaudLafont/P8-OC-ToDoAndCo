@@ -75,7 +75,7 @@ class Fixtures extends Fixture
             $task->setCreatedAt($createdAt);
 
             // Check if Task is anonymous
-            if(isset($attributes['user'])) {
+            if(!is_null($attributes['user'])) {
                 // If not fetch User in DB
                 $user = $manager->getRepository(User::class)
                     ->findOneBy(['username' => $attributes['user']]);
