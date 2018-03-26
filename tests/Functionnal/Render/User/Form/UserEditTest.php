@@ -1,7 +1,5 @@
 <?php
-namespace Tests\Functionnal\Render;
-
-use Tests\Functionnal\Render\User\UserFormRender;
+namespace Tests\Functionnal\Render\User\Form;
 
 class UserEditTest extends UserFormRender
 {

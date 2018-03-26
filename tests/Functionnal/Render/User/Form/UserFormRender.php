@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Functionnal\Render\User;
+namespace Tests\Functionnal\Render\User\Form;
 
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\Functionnal\Render\BaseLayout;

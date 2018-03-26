@@ -9,7 +9,7 @@ class HomepageTest extends BaseLayout
     /**
      * Check rendering of response when role_user request Homepage
      */
-    public function testUserRender() {
+    public function testHomepageUserRender() {
         // Create Client
         $client = $this->createRoleUserClient();
         $crawler = $client->request('GET', '/');
@@ -24,7 +24,7 @@ class HomepageTest extends BaseLayout
     /**
      * Check rendering of response when role_admin request Homepage
      */
-    public function testAdminRender() {
+    public function testHomepageAdminRender() {
         // Create Client
         $client = $this->createRoleAdminClient();
         $crawler = $client->request('GET', '/');
