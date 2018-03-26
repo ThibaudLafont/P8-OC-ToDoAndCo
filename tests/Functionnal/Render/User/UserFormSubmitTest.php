@@ -101,6 +101,20 @@ class UserFormSubmitTest extends BaseLayout
             ]
         ];
 
-        return [$set1, $set2, $set3, $set4];
+        // Invalid repeat pwd
+        $set5 = [
+            'user' => [
+                'user[username]' => 'XXX',
+                'user[plainPassword][first]' => 'xxx',
+                'user[plainPassword][second]'=> 'x',
+                'user[email]' => 'xxx@gmail.com',
+                'user[role]' => 'admin'
+            ],
+            'messages' => [
+                'Les deux mots de passe doivent correspondre.'
+            ]
+        ];
+
+        return [$set1, $set2, $set3, $set4, $set5];
     }
 }
