@@ -23,7 +23,6 @@ class TaskListTest extends BaseLayout
         // We know User own 2 Task and should not be able to edit Anon one
         // => attempt 2 delete button
         $this->checkDeleteForm(2, $crawler);
-
     }
 
     /**
