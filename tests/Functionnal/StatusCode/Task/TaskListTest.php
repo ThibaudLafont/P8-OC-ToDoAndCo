@@ -9,15 +9,12 @@ class TaskListTest extends StatusCode
      * Check status codes when request task_list with anon client
      */
     public function testTaskListWithAnon() {
-        // Create Client
-        $client = $this->createAnonClient();
-
         // Request task_list and expect 302
         $this->checkRedirection(
             '/tasks',
             '/login',
             ['GET'],
-            $client
+            $this->createAnonClient()
         );
     }
 
@@ -25,15 +22,12 @@ class TaskListTest extends StatusCode
      * Check status codes when request task_list with role_user client
      */
     public function testTaskListWithUser() {
-        // Create Client
-        $client = $this->createRoleUserClient();
-
         // Request task_list and expect 200
         $this->checkResponseStatusCode(
             '/tasks',
             ['GET'],
             200,
-            $client
+            $this->createRoleUserClient()
         );
     }
 
@@ -41,15 +35,12 @@ class TaskListTest extends StatusCode
      * Check status codes when request task_list with role_admin client
      */
     public function testTaskListWithAdmin() {
-        // Create Client
-        $client = $this->createRoleAdminClient();
-
         // Request task_list and expect 200
         $this->checkResponseStatusCode(
             '/tasks',
             ['GET'],
             200,
-            $client
+            $this->createRoleAdminClient()
         );
     }
 

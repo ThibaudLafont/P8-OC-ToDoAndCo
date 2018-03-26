@@ -9,15 +9,12 @@ class UserCreateTest extends StatusCode
      * Request user_create with anon client
      */
     public function testUserCreateWithAnon() {
-        // Create anon client
-        $client = $this->createAnonClient();
-
         // Check 302 when request in GET&POST
         $this->checkRedirection(
             '/users/create',
             '/login',
             ['GET', 'POST'],
-            $client
+            $this->createAnonClient()
         );
     }
 
@@ -25,15 +22,12 @@ class UserCreateTest extends StatusCode
      * Request user_create with role_user client
      */
     public function testUserCreateWithUser() {
-        // Create Client
-        $client = $this->createRoleUserClient();
-
         // Request in GET&POST and expect 403
         $this->checkResponseStatusCode(
             '/users/create',
             ['GET', 'POST'],
             403,
-            $client
+            $this->createRoleUserClient()
         );
     }
 
@@ -41,15 +35,12 @@ class UserCreateTest extends StatusCode
      * Request user_create with role_admin client
      */
     public function testUserCreateWithAdmin() {
-        // Create Client
-        $client = $this->createRoleAdminClient();
-
         // Request by GET&POST and expect 200
         $this->checkResponseStatusCode(
             '/users/create',
             ['GET', 'POST'],
             200,
-            $client
+            $this->createRoleAdminClient()
         );
     }
 

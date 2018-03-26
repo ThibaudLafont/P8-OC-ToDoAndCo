@@ -8,16 +8,12 @@ class HomepageTest extends StatusCode
      * Check 302 when GET and 405 other
      */
     public function testHomepageWithAnon() {
-
-        // Create anon client
-        $client = $this->createAnonClient();
-
         // Request / by GET and check status code
         $this->checkRedirection(
             '/',
             '/login',
             ['GET'],
-            $client
+            $this->createAnonClient()
         );
     }
 
@@ -26,16 +22,12 @@ class HomepageTest extends StatusCode
      * Check 302 when GET and 405 other
      */
     public function testHomepageWithUser() {
-
-        // Create User client
-        $client = $this->createRoleUserClient();
-
         // Request / by GET and expect 200
         $this->checkResponseStatusCode(
             '/',
             ['GET'],
             200,
-            $client
+            $this->createRoleUserClient()
         );
     }
 
@@ -44,16 +36,12 @@ class HomepageTest extends StatusCode
      * Check 302 when GET and 405 other
      */
     public function testHomepageWithAdmin() {
-
-        // Create Admin client
-        $client = $this->createRoleAdminClient();
-
         // Request / by GET and expect 200 status
         $this->checkResponseStatusCode(
             '/',
             ['GET'],
             200,
-            $client
+            $this->createRoleAdminClient()
         );
     }
 
