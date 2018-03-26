@@ -148,7 +148,7 @@ class TaskTest extends StatusCode
 
         // Request toggle task 1 and check redirection
         $this->checkRedirection(
-            '/tasks/1/toggle',
+            '/tasks/2/toggle',
             '/login',
             ['GET'],
             $client
@@ -156,7 +156,7 @@ class TaskTest extends StatusCode
 
         // Check other methods are forbidden
         $this->checkForbiddenMethods(
-            '/tasks/1/toggle',
+            '/tasks/2/toggle',
             ['GET'],
             $client
         );
@@ -168,7 +168,7 @@ class TaskTest extends StatusCode
 
         // Request toggle and expect 200
         $this->checkRedirection(
-            '/tasks/1/toggle',
+            '/tasks/2/toggle',
             '/tasks',
             ['GET'],
             $client,
@@ -177,7 +177,7 @@ class TaskTest extends StatusCode
 
         // Request by other methods and expect 405
         $this->checkForbiddenMethods(
-            '/tasks/1/toggle',
+            '/tasks/2/toggle',
             ['GET'],
             $client
         );
@@ -189,7 +189,7 @@ class TaskTest extends StatusCode
 
         // Request toggle and expect 200
         $this->checkRedirection(
-            '/tasks/1/toggle',
+            '/tasks/2/toggle',
             '/tasks',
             ['GET'],
             $client,
@@ -198,7 +198,7 @@ class TaskTest extends StatusCode
 
         // Request by other methods and expect 405
         $this->checkForbiddenMethods(
-            '/tasks/1/toggle',
+            '/tasks/2/toggle',
             ['GET'],
             $client
         );
@@ -210,7 +210,7 @@ class TaskTest extends StatusCode
 
         // Request Edit and expect redirection
         $this->checkRedirection(
-            '/tasks/1/edit',
+            '/tasks/2/edit',
             '/login',
             ['GET', 'POST'],
             $client
@@ -218,7 +218,7 @@ class TaskTest extends StatusCode
 
         // Attempt 405 for other methods
         $this->checkForbiddenMethods(
-            '/tasks/1/edit',
+            '/tasks/2/edit',
             ['GET', 'POST'],
             $client
         );
@@ -228,10 +228,9 @@ class TaskTest extends StatusCode
         // Create Client
         $client = $this->createRoleUserClient();
 
-        // Anon Task id in test_db => 1
         // Request edit and expect 200
         $this->checkResponseStatusCode(
-            '/tasks/1/edit',
+            '/tasks/2/edit',
             ['GET', 'POST'],
             200,
             $client
@@ -239,7 +238,7 @@ class TaskTest extends StatusCode
 
         // Request by other methods and expect 405
         $this->checkForbiddenMethods(
-            '/tasks/1/edit',
+            '/tasks/2/edit',
             ['GET', 'POST'],
             $client
         );
@@ -249,10 +248,9 @@ class TaskTest extends StatusCode
         // Create Client
         $client = $this->createRoleAdminClient();
 
-        // Anon Task id in test_db => 1
         // Request edit and expect 200
         $this->checkResponseStatusCode(
-            '/tasks/1/edit',
+            '/tasks/2/edit',
             ['GET', 'POST'],
             200,
             $client
@@ -260,7 +258,7 @@ class TaskTest extends StatusCode
 
         // Request by other methods and expect 405
         $this->checkForbiddenMethods(
-            '/tasks/1/edit',
+            '/tasks/2/edit',
             ['GET', 'POST'],
             $client
         );
@@ -270,7 +268,7 @@ class TaskTest extends StatusCode
         // Create Client
         $client = $this->createAnonClient();
 
-        // Request delete task and attempt 302 /login
+        // Request delete anonymous task and attempt 302 /login
         $this->checkRedirection(
             '/tasks/1/delete',
             '/login',
@@ -318,18 +316,99 @@ class TaskTest extends StatusCode
         );
 
         // Request delete for anonymous task, attempt 302 to /tasks
-//        $this->checkRedirection(
-//            '/tasks/1/delete',
-//            '/tasks',
-//            ['GET'],
-//            $client
-//        );
+        $this->checkRedirection(
+            '/tasks/1/delete',
+            '/tasks',
+            ['GET'],
+            $client,
+            true
+        );
     }
 
-    public function testOwnedTaskDeleteWithUser() {}
-    public function testOwnedTaskDeleteWithAdmin() {}
+    public function testNotOwnedTaskDeleteWithUser() {
+        // Create Client
+        $client = $this->createRoleUserClient();
 
-    public function testNotOwnedTaskDeleteWithUser() {}
-    public function testNotOwnedTaskDeleteWithAdmin() {}
+        // In test_db, not owned task id => 2
+        // Request by forbidden methods
+        $this->checkForbiddenMethods(
+            '/tasks/2/delete',
+            ['GET'],
+            $client
+        );
+        
+        // Request delete and expect 302 to /tasks
+        $this->checkResponseStatusCode(
+            '/tasks/2/delete',
+            ['GET'],
+            403,
+            $client
+        );
+    }
+
+    public function testNotOwnedTaskDeleteWithAdmin() {
+        // Create Client
+        $client = $this->createRoleAdminClient();
+
+        // In test_db, owned task id => 3
+        // Request by forbidden methods
+        $this->checkForbiddenMethods(
+            '/tasks/3/delete',
+            ['GET'],
+            $client
+        );
+
+        // Request delete and expect 302 to /tasks
+        $this->checkResponseStatusCode(
+            '/tasks/3/delete',
+            ['GET'],
+            403,
+            $client
+        );
+    }
+
+    public function testOwnedTaskDeleteWithUser() {
+        // Create Client
+        $client = $this->createRoleUserClient();
+
+        // In test_db, owned task id => 3
+        // Request by forbidden methods
+        $this->checkForbiddenMethods(
+            '/tasks/3/delete',
+            ['GET'],
+            $client
+        );
+
+        // Request delete and expect 302 to /tasks
+        $this->checkRedirection(
+            '/tasks/3/delete',
+            '/tasks',
+            ['GET'],
+            $client,
+            true
+        );
+    }
+
+    public function testOwnedTaskDeleteWithAdmin() {
+        // Create Client
+        $client = $this->createRoleAdminClient();
+
+        // In test_db, owned task id => 3
+        // Request by forbidden methods
+        $this->checkForbiddenMethods(
+            '/tasks/2/delete',
+            ['GET'],
+            $client
+        );
+
+        // Request delete and expect 302 to /tasks
+        $this->checkRedirection(
+            '/tasks/2/delete',
+            '/tasks',
+            ['GET'],
+            $client,
+            true
+        );
+    }
 
 }
