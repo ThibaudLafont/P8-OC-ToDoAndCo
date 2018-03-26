@@ -336,7 +336,7 @@ class TaskTest extends StatusCode
             ['GET'],
             $client
         );
-        
+
         // Request delete and expect 302 to /tasks
         $this->checkResponseStatusCode(
             '/tasks/2/delete',

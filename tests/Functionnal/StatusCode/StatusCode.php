@@ -52,7 +52,7 @@ abstract class StatusCode extends WebTestCase
      * @param string $redirectionUrl Attempted redirection url
      * @param array $methods Methods for requests
      * @param Client $client Client for requests
-     * @param bool $absolute Does redirection attempt absolute URL
+     * @param bool $relative Does redirection attempt absolute URL
      *
      * @return Client For additional checks
      */
@@ -129,5 +129,33 @@ abstract class StatusCode extends WebTestCase
             }
         }
 
+    }
+
+    /**
+     * Request route with all methods apart specified ones
+     *
+     * @param string $url        Url to request
+     * @param array $authorized  Authorized methods
+     */
+    protected function checkForbiddenMethodsWithAllUserTypes(
+        string $url,
+        array $authorized
+    ) {
+        // Create and store all types of Client
+        $clients = [
+            $this->createAnonClient(),
+            $this->createRoleUserClient(),
+            $this->createRoleAdminClient()
+        ];
+
+        // For each user type
+        foreach($clients as $client) {
+            // Check forbidden methods
+            $this->checkForbiddenMethods(
+                $url,
+                $authorized,
+                $client
+            );
+        }
     }
 }
