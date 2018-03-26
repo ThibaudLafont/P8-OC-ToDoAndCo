@@ -2,9 +2,13 @@
 namespace Tests\Functionnal\Render\User;
 
 use Tests\Functionnal\Render\BaseLayout;
+use Tests\Functionnal\Traits\InvalidFormSubmit;
 
 class UserFormSubmitTest extends BaseLayout
 {
+    // Traits
+    use InvalidFormSubmit;
+
     /**
      * @param array $data
      * @param array $messages
@@ -13,7 +17,12 @@ class UserFormSubmitTest extends BaseLayout
      */
     public function testCreateWithInvalidValues(array $data, array $messages)
     {
-        $this->checkUserFormRenderWithInvalidValues('/users/create', $data, $messages);
+        // Check render from dataProvider values
+        $this->checkFormRenderWithInvalidValues(
+            '/users/create',
+            $data,
+            $messages
+        );
     }
 
     /**
@@ -25,63 +34,11 @@ class UserFormSubmitTest extends BaseLayout
     public function testEditRenderWithInvalidValues(array $data, array $messages)
     {
         // Check render from dataProvider values
-        $this->checkUserFormRenderWithInvalidValues('/users/1/edit', $data, $messages);
-    }
-
-    private function checkUserFormRenderWithInvalidValues(
-        string $path,
-        array $data,
-        array $messages
-    )
-    {
-        // Create Client
-        $client = $this->createRoleAdminClient();
-        $crawler = $client->request('GET', $path);
-
-        // Select form from submit button
-        $submit = $crawler->selectButton(
-            $path === '/users/create' ? 'Ajouter' : 'Modifier'
+        $this->checkFormRenderWithInvalidValues(
+            '/users/1/edit',
+            $data,
+            $messages
         );
-        $form = $submit->form($data);
-
-        // Request form submission
-        $crawler = $client->submit($form);
-
-        // Check total number of errors
-        $this->assertEquals(
-            count($messages),
-            $crawler->filter('span.help-block')->count()
-        );
-        // Foreach messages
-        foreach($messages as $message) {
-            // Check presence and content
-            $this->assertEquals(
-                1,
-                $crawler->filter('span.help-block ul li:contains("' . $message . '")')->count()
-            );
-        }
-    }
-
-    public function getPersistedUserValues()
-    {
-        return [
-            [
-                '/users/1/edit',
-                [
-                    'username' => 'RoleAdmin',
-                    'email'    => 'roleadmin@gmail.com',
-                    'role'     => 'Administrateur'
-                ]
-            ],
-            [
-                '/users/2/edit',
-                [
-                    'username' => 'RoleUser',
-                    'email'    => 'roleuser@gmail.com',
-                    'role'     => 'Utilisateur'
-                ]
-            ]
-        ];
     }
 
     public function userInvalidValues()
