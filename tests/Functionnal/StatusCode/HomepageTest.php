@@ -3,7 +3,6 @@ namespace Tests\Functionnal\StatusCode;
 
 class HomepageTest extends StatusCode
 {
-
     /**
      * Request homepage with Anonymous client,
      * Check 302 when GET and 405 other
@@ -20,14 +19,6 @@ class HomepageTest extends StatusCode
             ['GET'],
             $client
         );
-
-        // Check all other methods and expect 405
-        $this->checkForbiddenMethods(
-            '/',
-            ['GET'],
-            $client
-        );
-
     }
 
     /**
@@ -46,14 +37,6 @@ class HomepageTest extends StatusCode
             200,
             $client
         );
-
-        // Request / by other methods and expect 405
-        $this->checkForbiddenMethods(
-            '/',
-            ['GET'],
-            $client
-        );
-
     }
 
     /**
@@ -72,14 +55,16 @@ class HomepageTest extends StatusCode
             200,
             $client
         );
-
-        // Request / by other methods and expect 405
-        $this->checkForbiddenMethods(
-            '/',
-            ['GET'],
-            $client
-        );
-
     }
 
+    /**
+     * Check all unauthorized methods
+     */
+    public function testTaskDeleteForbiddenMethods()
+    {
+        $this->checkForbiddenMethodsWithAllUserTypes(
+            '/',
+            ['GET']
+        );
+    }
 }
