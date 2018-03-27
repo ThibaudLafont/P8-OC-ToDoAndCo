@@ -49,6 +49,7 @@
                         {% block user_button %}
                             <a href="{{ path('task_list') }}" class="btn btn-primary">Liste des tâches</a>
                         {% endblock %}
+                        <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
                     {% endif %}
 
                     <!-- Display user button -->
@@ -58,13 +59,9 @@
                         {% endblock %}
                     {% endif %}
 
-                    {% if app.user %}
-                        <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-                    {% endif %}
-
-                    {% if not app.user and 'login' != app.request.attributes.get('_route') %}
-                        <a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
-                    {% endif %}
+                    {#{% if not app.user and 'login' != app.request.attributes.get('_route') %}#}
+                        {#<a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>#}
+                    {#{% endif %}#}
                 </div>
             </div>
 
