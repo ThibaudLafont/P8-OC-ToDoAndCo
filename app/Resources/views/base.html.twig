@@ -41,6 +41,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <!-- List task link -->
+                    {% block user_button %}
+                        <a href="{{ path('task_list') }}" class="btn btn-primary">Liste des taches</a>
+                    {% endblock %}
 
                     <!-- Display user button -->
                     {% if is_granted('ROLE_ADMIN') %}
@@ -48,11 +52,9 @@
                             <a href="{{ path('user_list') }}" class="btn btn-primary">Liste des utilisateurs</a>
                         {% endblock %}
                     {% endif %}
-                    
+
                     {% if app.user %}
-                        <a href="{{ path('logout') }}" class="pull-right btn btn-danger">
-                            Se déconnecter
-                        </a>
+                        <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
                     {% endif %}
 
                     {% if not app.user and 'login' != app.request.attributes.get('_route') %}

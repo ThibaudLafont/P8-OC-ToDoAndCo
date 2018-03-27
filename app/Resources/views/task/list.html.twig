@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block user_button %}
+    <a href="{{ path('homepage') }}" class="btn btn-success">Accueil</a>
+{% endblock %}
+
 {% block header_title %}
     <h1>Liste des taches à réaliser</h1>
 {% endblock %}
