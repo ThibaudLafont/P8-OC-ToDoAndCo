@@ -24,22 +24,4 @@ class SecurityController extends Controller
             'error'         => $error,
         ));
     }
-
-    /**
-     * @Route("/login_check", name="login_check")
-     * @Method({"POST"})
-     */
-    public function loginCheck()
-    {
-        // This code is never executed.
-    }
-
-    /**
-     * @Route("/logout", name="logout")
-     * @Method({"GET"})
-     */
-    public function logoutCheck()
-    {
-        // This code is never executed.
-    }
 }
