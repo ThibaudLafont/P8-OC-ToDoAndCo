@@ -26,13 +26,13 @@
                     <p class="task-content">{{ task.content }}</p>
                 </div>
                 <div class="task-actions">
-                    <form class= "toggle-task" action="{{ path('task_toggle', {'id' : task.id }) }}">
+                    <form class= "toggle-task" action="{{ path('task_toggle', {'id' : task.id }) }}" method="post">
                         <button type="submit" class="btn btn-success btn-sm pull-right">
                             {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
                         </button>
                     </form>
                     {% if is_granted('delete', task) %}
-                        <form action="{{ path('task_delete', {'id' : task.id }) }}">
+                        <form action="{{ path('task_delete', {'id' : task.id }) }}" method="post">
                             <button type="submit" class="btn btn-danger btn-sm pull-right">Supprimer</button>
                         </form>
                     {% endif %}
