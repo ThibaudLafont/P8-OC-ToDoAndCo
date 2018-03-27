@@ -44,7 +44,7 @@ class TaskListener
         );
         // Assign createAt to Task
         $task->setCreatedAt($createAt);
-        
+
         // Assign logged user
         $this->assignUser($task);
     }
