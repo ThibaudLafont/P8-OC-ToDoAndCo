@@ -12,7 +12,7 @@ class LoginTest extends StatusCode
         // Check 200 status code when GET
         $this->checkResponseStatusCode(
             '/login',
-            ['GET', 'POST'],
+            ['GET'],
             200,
             $this->createAnonClient()
         );
@@ -25,7 +25,7 @@ class LoginTest extends StatusCode
         // Check 403 forbidden when GET&POST
         $this->checkResponseStatusCode(
             '/login',
-            ['GET', 'POST'],
+            ['GET'],
             403,
             $this->createRoleUserClient()
         );
@@ -38,7 +38,7 @@ class LoginTest extends StatusCode
         // Check 403 forbidden when GET&POST
         $this->checkResponseStatusCode(
             '/login',
-            ['GET', 'POST'],
+            ['GET'],
             403,
             $this->createRoleAdminClient()
         );
@@ -50,7 +50,7 @@ class LoginTest extends StatusCode
     {
         $this->checkForbiddenMethodsWithAllUserTypes(
             '/login',
-            ['GET', 'POST']
+            ['GET']
         );
     }
 
