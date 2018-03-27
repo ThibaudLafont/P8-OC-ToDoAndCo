@@ -43,12 +43,11 @@
                 <div class="col-md-12">
 
                     <!-- Display button if user is admin -->
-                    {% if is_granted('ROLE_ADMIN') %}
-                        {% if not app.request.attributes.get('_route') is same as('user_list') %}
-                            <a href="{{ path('user_list') }}" class="btn btn-primary">Liste des utilisateurs</a>
-                        {% else %}
-                            <a href="{{ path('user_create') }}" class="btn btn-success">Créer un utilisateur</a>
-                        {% endif %}
+                    {% if is_granted('ROLE_ADMIN') and not app.request.attributes.get('_route') is same as('user_list') %}
+                        <a href="{{ path('user_list') }}" class="btn btn-primary">Liste des utilisateurs</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') and app.request.attributes.get('_route') is same as('user_list') %}
+                        <a href="{{ path('user_create') }}" class="btn btn-success">Créer un utilisateur</a>
                     {% endif %}
 
                     {% if app.user %}
