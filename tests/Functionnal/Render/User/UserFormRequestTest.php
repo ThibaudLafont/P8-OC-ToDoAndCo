@@ -1,88 +1,75 @@
 <?php
-namespace Tests\Functionnal\Render;
+namespace Tests\Functionnal\Render\User;
 
 use Symfony\Component\DomCrawler\Crawler;
+use Tests\Functionnal\Render\BaseLayout;
 
-class UserTest extends BaseLayout
+class UserFormRequestTest extends BaseLayout
 {
-
-    /**
-     * Check render of user_list
-     */
-    public function testListRenderWithAdmin() {
-
-        // Create Client
-        $client = $this->createRoleAdminClient();
-        $crawler = $client->request('GET', '/users');
-
-        // Check admin base layout
-        $this->checkAdminBaseLayout($crawler);
-
-        // Check H1
-        $this->checkTitle(
-            'Liste des utilisateurs',
-            1,
-            $crawler
-        );
-        // Check table presence
-        $this->assertEquals(
-            1,
-            $crawler->filter('table')->count()
-        );
-        // check edit_link 1
-        $this->checkLink(
-            'Edit',
-            '/users/1/edit',
-            1,
-            $crawler
-        );
-        // check edit_link 2
-        $this->checkLink(
-            'Edit',
-            '/users/2/edit',
-            1,
-            $crawler
-        );
-
-    }
-
     /**
      * Check render of user_form in user_create action
      */
-    public function testCreateRenderWithAdmin() {
+    public function testCreateRender()
+    {
         // Create Client
         $client = $this->createRoleAdminClient();
         $crawler = $client->request('GET', '/users/create');
 
         // Check UserForm
-        $this->checkUserForm('/users/create', $crawler);
+        $this->checkUserFormRender('/users/create', $crawler);
     }
 
     /**
      * Check render and hydratation of user_form in user_edit
+     *
+     * @param string $action Action of form
+     * @param array $data    Expected data witch hydrate edit form
+     *
+     * @dataProvider getPersistedUserValues
      */
-    public function testEditRenderWithAdmin() {
+    public function testEditRender(string $action, array $data)
+    {
         // Create Client
         $client = $this->createRoleAdminClient();
-        $crawler = $client->request('GET', '/users/1/edit');
-
-        // Expected values (from db_test)
-        $user = [
-            'username' => 'RoleAdmin',
-            'email'    => 'roleadmintest@gmail.com',
-            'role'     => 'Administrateur'
-        ];
+        $crawler = $client->request('GET', $action);
 
         // Check UserForm
-        $this->checkUserForm('/users/1/edit', $crawler, $user);
+        $this->checkUserFormRender($action, $crawler, $data);
     }
 
+    public function getPersistedUserValues()
+    {
+        return [
+            [
+                '/users/1/edit',
+                [
+                    'username' => 'RoleAdmin',
+                    'email'    => 'roleadmin@gmail.com',
+                    'role'     => 'Administrateur'
+                ]
+            ],
+            [
+                '/users/2/edit',
+                [
+                    'username' => 'RoleUser',
+                    'email'    => 'roleuser@gmail.com',
+                    'role'     => 'Utilisateur'
+                ]
+            ]
+        ];
+    }
     /**
+     * Check base render of User form
+     *
      * @param string $action    Action attribute of form
      * @param Crawler $crawler  Crawler
      * @param array $values     If edit action, inquire attempted values here
      */
-    private function checkUserForm(string $action, Crawler $crawler, array $values = [])
+    protected function checkUserFormRender(
+        string $action,
+        Crawler $crawler,
+        array $values = []
+    )
     {
         // Check form
         $this->checkForm(
@@ -157,36 +144,11 @@ class UserTest extends BaseLayout
             isset($values['email']) ? $values['email'] : null
         );
 
-        // Check role label
-        $this->checkLabel(
-            'Type d\'utilisateur',
-            'user_role',
-            1,
-            $crawler
+        // Check Role select
+        $this->checkRoleSelect(
+            $crawler,
+            isset($values['role']) ? $values['role'] : null
         );
-        // Check role select
-        $this->assertEquals(
-            1,
-            $crawler->filter('select#user_role')->count()
-        );
-        // Check role option
-        $this->assertEquals(
-            1,
-            $crawler->filter('option:contains("Administrateur")')->count()
-        );
-        // Check role option
-        $this->assertEquals(
-            1,
-            $crawler->filter('option:contains("Utilisateur")')->count()
-        );
-
-        // if value[role] isset, check if select is selected
-        if(isset($values['role'])) {
-            $this->assertEquals(
-                'selected',
-                $crawler->filter('option:contains("' . $values['role'] . '")')->first()->attr('selected')
-            );
-        }
 
         // Check submit button
         $buttonValue = $action === '/users/create' ? 'Ajouter' : 'Modifier';
@@ -198,4 +160,40 @@ class UserTest extends BaseLayout
         );
     }
 
+    protected function checkRoleSelect(Crawler $crawler, $role)
+    {
+        // Check role label
+        $this->checkLabel(
+            'Type d\'utilisateur',
+            'user_role',
+            1,
+            $crawler
+        );
+
+        // Check role select
+        $this->assertEquals(
+            1,
+            $crawler->filter('select#user_role')->count()
+        );
+
+        // Check role option 1
+        $this->assertEquals(
+            1,
+            $crawler->filter('option:contains("Administrateur")')->count()
+        );
+
+        // Check role option 2
+        $this->assertEquals(
+            1,
+            $crawler->filter('option:contains("Utilisateur")')->count()
+        );
+
+        // if value[role] isset, check if good option is selected
+        if(!is_null($role)) {
+            $this->assertEquals(
+                'selected',
+                $crawler->filter('option:contains("' . $role . '")')->first()->attr('selected')
+            );
+        }
+    }
 }

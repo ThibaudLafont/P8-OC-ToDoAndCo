@@ -81,6 +81,16 @@ class User implements UserInterface
     private $role;
 
     /**
+     * @var mixed
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Task",
+     *     mappedBy="user"
+     * )
+     */
+    private $tasks;
+
+    /**
      * Get id
      *
      * @return mixed
@@ -230,5 +240,13 @@ class User implements UserInterface
         $this->plainPassword = $plainPassword;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
     }
 }

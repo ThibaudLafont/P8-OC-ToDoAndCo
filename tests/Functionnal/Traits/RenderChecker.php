@@ -106,30 +106,46 @@ trait RenderChecker
         string $value = null
     )
     {
-        // Check input presence and id value
+        // Define type of field
+        if($type === 'textarea') $tag = 'textarea#' . $id;
+        else                     $tag = 'input#' . $id;
+
+        // Check presence and id value
         $this->assertEquals(
             $count,
-            $crawler->filter('input#' . $id)->count()
+            $crawler->filter($tag)->count()
         );
 
-        // Check input type
-        $this->assertEquals(
-            $type,
-            $crawler->filter('input#' . $id)->first()->attr('type')
-        );
 
-        // check input name
+        // Concern only input
+        if(strpos($tag, 'input') === 0) {
+            // Check input type
+            $this->assertEquals(
+                $type,
+                $crawler->filter($tag)->first()->attr('type')
+            );
+        }
+
+        // check name
         $this->assertEquals(
             $name,
-            $crawler->filter('input#' . $id)->first()->attr('name')
+            $crawler->filter($tag)->first()->attr('name')
         );
 
-        // If value inquired, check input value
+        // If value inquired, check value
+
         if(!is_null($value)) {
-            $this->assertEquals(
-                $value,
-                $crawler->filter('input#' . $id)->first()->attr('value')
-            );
+            if(strpos($tag, 'input') === 0) {
+                $this->assertEquals(
+                    $value,
+                    $crawler->filter($tag)->first()->attr('value')
+                );
+            } else {
+                $this->assertEquals(
+                    $value,
+                    $crawler->filter($tag)->first()->getNode(0)->nodeValue
+                );
+            }
         }
     }
 

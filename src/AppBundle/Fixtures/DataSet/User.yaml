@@ -1,8 +1,8 @@
-Thibaud:
+RoleAdmin:
   password: pommepomme
-  email: thibdlafnt@gmail.com
+  email: roleadmin@gmail.com
   role: admin
-User:
+RoleUser:
   password: pommepomme
-  email: user@gmail.com
+  email: roleuser@gmail.com
   role: user

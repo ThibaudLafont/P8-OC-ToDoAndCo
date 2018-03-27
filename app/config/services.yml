@@ -4,12 +4,32 @@ parameters:
 #    parameter_name: value
 
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        exclude: '../../src/AppBundle/{Repository}'
+
+    event_dispatcher:
+        class: 'Symfony\Component\EventDispatcher\EventDispatcher'
+        public: true
+
     psr_logger:
         class: "Psr\Log\LoggerInterface"
 
     user_listener:
         class: AppBundle\EventListener\UserListener
         arguments: ['@Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface']
+        tags:
+            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, entity_manager: custom }
+
+    task_listener:
+        class: AppBundle\EventListener\TaskListener
+        arguments: ['@Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface']
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }

@@ -2,13 +2,10 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\User;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * Class MessageListener
- *
- * Execute actions when Doctrine work with Messages entities
+ * Class UserListener
  *
  * @package AppBundle\EventListener
  */

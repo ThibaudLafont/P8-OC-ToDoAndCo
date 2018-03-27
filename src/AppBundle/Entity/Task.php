@@ -5,8 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  * @ORM\Table
+ * @ORM\EntityListeners({"AppBundle\EventListener\TaskListener"})
  */
 class Task
 {
@@ -38,6 +39,16 @@ class Task
      * @ORM\Column(type="boolean")
      */
     private $isDone;
+
+    /**
+     * @var User|null
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="User",
+     *     inversedBy="tasks"
+     * )
+     */
+    private $user;
 
     public function __construct()
     {
@@ -88,5 +99,27 @@ class Task
     public function toggle($flag)
     {
         $this->isDone = $flag;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
+
+    public function getUserUsername()
+    {
+        if(is_null($this->getUser())) return 'Anonymous';
+        else return $this->getUser()->getUsername();
     }
 }

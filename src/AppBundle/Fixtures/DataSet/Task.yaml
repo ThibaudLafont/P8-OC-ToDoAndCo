@@ -1,16 +1,30 @@
 Tache 1:
   created_at: 02-02-2017
   content: Contenu de la tache 1
-  is_done: false
+  user: null
+  is_done: 0
 Tache 2:
   created_at: 02-06-2017
   content: Contenu de la tache 2
-  is_done: false
+  user: RoleAdmin
+  is_done: 0
 Tache 3:
   created_at: 02-09-2017
   content: Contenu de la tache 3
-  is_done: false
+  user: RoleUser
+  is_done: 1
 Tache 4:
-  created_at: 08-02-2017
+  created_at: 02-02-2017
   content: Contenu de la tache 4
-  is_done: true
+  user: null
+  is_done: 0
+Tache 5:
+  created_at: 02-06-2017
+  content: Contenu de la tache 5
+  user: RoleAdmin
+  is_done: 0
+Tache 6:
+  created_at: 02-09-2017
+  content: Contenu de la tache 6
+  user: RoleUser
+  is_done: 1
