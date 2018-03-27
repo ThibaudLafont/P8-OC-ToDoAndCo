@@ -12,7 +12,7 @@ class TaskDeleteTest extends StatusCode
     {
         $this->checkForbiddenMethodsWithAllUserTypes(
             '/tasks/1/delete',
-            ['GET']
+            ['POST']
         );
     }
 
@@ -21,7 +21,7 @@ class TaskDeleteTest extends StatusCode
         $this->checkRedirection(
             '/tasks/1/delete',
             '/login',
-            ['GET'],
+            ['POST'],
             $this->createAnonClient()
         );
     }
@@ -31,7 +31,7 @@ class TaskDeleteTest extends StatusCode
         // Request delete for anonymous task, attempt 403
         $this->checkResponseStatusCode(
             '/tasks/1/delete',
-            ['GET'],
+            ['POST'],
             403,
             $this->createRoleUserClient()
         );
@@ -43,7 +43,7 @@ class TaskDeleteTest extends StatusCode
         $this->checkRedirection(
             '/tasks/1/delete',
             '/tasks',
-            ['GET'],
+            ['POST'],
             $this->createRoleAdminClient(),
             true
         );
@@ -54,7 +54,7 @@ class TaskDeleteTest extends StatusCode
         // Request delete and expect 302 to /tasks
         $this->checkResponseStatusCode(
             '/tasks/2/delete',
-            ['GET'],
+            ['POST'],
             403,
             $this->createRoleUserClient()
         );
@@ -65,7 +65,7 @@ class TaskDeleteTest extends StatusCode
         // Request delete and expect 302 to /tasks
         $this->checkResponseStatusCode(
             '/tasks/3/delete',
-            ['GET'],
+            ['POST'],
             403,
             $this->createRoleAdminClient()
         );
@@ -77,7 +77,7 @@ class TaskDeleteTest extends StatusCode
         $this->checkRedirection(
             '/tasks/3/delete',
             '/tasks',
-            ['GET'],
+            ['POST'],
             $this->createRoleUserClient(),
             true
         );
@@ -89,7 +89,7 @@ class TaskDeleteTest extends StatusCode
         $this->checkRedirection(
             '/tasks/2/delete',
             '/tasks',
-            ['GET'],
+            ['POST'],
             $this->createRoleAdminClient(),
             true
         );

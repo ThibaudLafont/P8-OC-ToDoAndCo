@@ -45,9 +45,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- List task link -->
-                    {% block user_button %}
-                        <a href="{{ path('task_list') }}" class="btn btn-primary">Liste des taches</a>
-                    {% endblock %}
+                    {% if app.user %}
+                        {% block user_button %}
+                            <a href="{{ path('task_list') }}" class="btn btn-primary">Liste des tâches</a>
+                        {% endblock %}
+                    {% endif %}
 
                     <!-- Display user button -->
                     {% if is_granted('ROLE_ADMIN') %}

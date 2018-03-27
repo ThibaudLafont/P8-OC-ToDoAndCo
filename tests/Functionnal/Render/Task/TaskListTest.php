@@ -99,7 +99,7 @@ class TaskListTest extends BaseLayout
             // Check Author username display
             $this->assertEquals(
                 1,
-                $node->filter('em.author')->count()
+                $node->filter('h4 small.author')->count()
             );
             // Check Content display
             $this->assertEquals(
@@ -125,7 +125,7 @@ class TaskListTest extends BaseLayout
         // Check Nbre of delete forms
         $this->assertEquals(
             $count,
-            $crawler->filter('button:contains("Supprimer")')->count()
+            $crawler->filter('button[type="submit"] span.glyphicon-trash')->count()
         );
     }
 

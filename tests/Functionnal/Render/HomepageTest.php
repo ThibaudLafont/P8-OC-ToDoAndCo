@@ -34,6 +34,14 @@ class HomepageTest extends BaseLayout
 
         // Execute homepageBaseLayout
         $this->checkHomepageBaseLayout($crawler);
+
+        // As Admin user, attempt list_users link
+        $this->checkLink(
+            'Liste des utilisateurs',
+            '/users',
+            1,
+            $crawler
+        );
     }
 
     private function checkHomepageBaseLayout(Crawler $crawler) {

@@ -71,6 +71,22 @@ class UserFormRequestTest extends BaseLayout
         array $values = []
     )
     {
+        // Check list-tasks button
+        $this->checkLink(
+            'Liste des tâches',
+            '/tasks',
+            1,
+            $crawler
+        );
+
+        // Check add-user button
+        $this->checkLink(
+            'Liste des utilisateurs',
+            '/users',
+            1,
+            $crawler
+        );
+
         // Check form
         $this->checkForm(
             $action,

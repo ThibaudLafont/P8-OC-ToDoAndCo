@@ -46,6 +46,26 @@ abstract class BaseLayout extends WebTestCase
         // Check anonBaseLayout
         $this->checkAnonBaseLayout($crawler);
 
+        // if task route, attempt homepage link
+        if(strpos($crawler->getUri(), 'tasks')) {
+            // homepage link
+            $this->checkLink(
+                'Accueil',
+                '/',
+                1,
+                $crawler
+            );
+        // Else attempt create_task link
+        } else {
+            // create_task link
+            $this->checkLink(
+                'Liste des tâches',
+                '/tasks',
+                1,
+                $crawler
+            );
+        }
+
         // Check Logout link
         $this->checkLink(
             'Se déconnecter',
@@ -62,21 +82,25 @@ abstract class BaseLayout extends WebTestCase
         // Check userBaseLayout
         $this->checkUserBaseLayout($crawler);
 
-        // Check add-user button
-        $this->checkLink(
-            'Créer un utilisateur',
-            '/users/create',
-            1,
-            $crawler
-        );
-
-        // Check list-users button
-        $this->checkLink(
-            'Liste des utilisateurs',
-            '/users',
-            1,
-            $crawler
-        );
+        // if users_list route, expect user_create link
+        if(preg_match('/(users)$/', $crawler->getUri())) {
+            // homepage link
+            $this->checkLink(
+                'Créer un utilisateur',
+                '/users/create',
+                1,
+                $crawler
+            );
+        // Else attempt users_list link
+        } else {
+            // users_list link
+            $this->checkLink(
+                'Liste des utilisateurs',
+                '/users',
+                1,
+                $crawler
+            );
+        }
     }
 
 }
