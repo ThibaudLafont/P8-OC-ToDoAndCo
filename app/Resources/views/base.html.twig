@@ -14,7 +14,10 @@
         <link rel="icon" type="image/png" href="/img/favicon.png" />
 
         <!-- Bootstrap Core CSS -->
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+              crossorigin="anonymous">
 
         <!-- Custom CSS -->
         <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
@@ -32,7 +35,6 @@
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">To Do List app</a>
-
                     <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
                 </div>
             </div>
@@ -41,19 +43,22 @@
         <!-- Page Content -->
         <div class="container">
             <div class="row">
-                <!-- Display button if user is admin -->
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('user_list') }}" class="btn btn-primary">Liste des utilisateurs</a>
-                    <a href="{{ path('user_create') }}" class="btn btn-success">Créer un utilisateur</a>
-                {% endif %}
+                <div class="col-md-12">
+                    <!-- List task link -->
+                    {% if app.user %}
+                        {% block user_button %}
+                            <a href="{{ path('task_list') }}" class="btn btn-primary">Liste des tâches</a>
+                        {% endblock %}
+                        <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
+                    {% endif %}
 
-                {% if app.user %}
-                <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-                {% endif %}
-
-                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
-                <a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
-                {% endif %}
+                    <!-- Display user button -->
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% block admin_button %}
+                            <a href="{{ path('user_list') }}" class="btn btn-primary">Liste des utilisateurs</a>
+                        {% endblock %}
+                    {% endif %}
+                </div>
             </div>
 
             <div class="row">
@@ -98,7 +103,10 @@
 
         </div>
 
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous">
+        </script>
     </body>
 </html>

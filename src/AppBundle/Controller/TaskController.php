@@ -74,7 +74,7 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
-     * @Method({"GET"})
+     * @Method({"POST"})
      */
     public function toggleTaskAction(Task $task)
     {
@@ -88,11 +88,13 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
-     * @Method({"GET"})
+     * @Method({"POST"})
      */
     public function deleteTaskAction(Task $task)
     {
+        // Check if logged user authorized to delete this resource
         $this->denyAccessUnlessGranted('delete', $task);
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();

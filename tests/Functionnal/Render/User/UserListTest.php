@@ -45,6 +45,22 @@ class UserListTest extends BaseLayout
 
     private function checkUserListBaseLayout(Crawler $crawler)
     {
+        // Check list-tasks button
+        $this->checkLink(
+            'Liste des tâches',
+            '/tasks',
+            1,
+            $crawler
+        );
+
+        // Check add-user button
+        $this->checkLink(
+            'Créer un utilisateur',
+            '/users/create',
+            1,
+            $crawler
+        );
+
         // Check H1
         $this->checkTitle(
             'Liste des utilisateurs',

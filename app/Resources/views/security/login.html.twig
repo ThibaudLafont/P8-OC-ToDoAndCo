@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block header_title %}
+    <h1>Bienvenue !</h1>
+{% endblock %}
+
 {% block body %}
     {% if error %}
         <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -11,6 +15,8 @@
 
         <label for="password">Mot de passe :</label>
         <input type="password" id="password" name="_password" />
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <button class="btn btn-success" type="submit">Se connecter</button>
     </form>

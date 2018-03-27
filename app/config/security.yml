@@ -17,10 +17,11 @@ security:
             anonymous: ~
             pattern: ^/
             form_login:
-                login_path: login
-                check_path: login_check
+                login_path: /login
+                check_path: /login_check
                 always_use_default_target_path:  true
                 default_target_path:  /
+                csrf_token_generator: security.csrf.token_manager
             logout:
                 path: /logout
                 target: /login
@@ -29,5 +30,6 @@ security:
 
     access_control:
         - { path: ^/login, roles: ROLE_NO_ACCESS, allow_if: "is_anonymous()" }
+        - { path: ^/login_check, roles: ['ROLE_USER', 'ROLE_ADMIN'] }
         - { path: ^/users, roles: ROLE_ADMIN }
         - { path: ^/, roles: ['ROLE_USER', 'ROLE_ADMIN'] }

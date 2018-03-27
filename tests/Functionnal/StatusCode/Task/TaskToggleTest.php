@@ -11,7 +11,7 @@ class TaskToggleTest extends StatusCode
         $this->checkRedirection(
             '/tasks/4/toggle',
             '/login',
-            ['GET'],
+            ['POST'],
             $this->createAnonClient()
         );
     }
@@ -21,7 +21,7 @@ class TaskToggleTest extends StatusCode
         $this->checkRedirection(
             '/tasks/4/toggle',
             '/tasks',
-            ['GET'],
+            ['POST'],
             $this->createRoleUserClient(),
             true
         );
@@ -32,7 +32,7 @@ class TaskToggleTest extends StatusCode
         $this->checkRedirection(
             '/tasks/4/toggle',
             '/tasks',
-            ['GET'],
+            ['POST'],
             $this->createRoleAdminClient(),
             true
         );
@@ -45,7 +45,7 @@ class TaskToggleTest extends StatusCode
     {
         $this->checkForbiddenMethodsWithAllUserTypes(
             '/tasks/4/toggle',
-            ['GET']
+            ['POST']
         );
     }
 
