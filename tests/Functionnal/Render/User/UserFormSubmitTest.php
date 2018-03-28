@@ -2,12 +2,12 @@
 namespace Tests\Functionnal\Render\User;
 
 use Tests\Functionnal\Render\BaseLayout;
-use Tests\Functionnal\Traits\InvalidFormSubmit;
+use Tests\Functionnal\Traits\FormSubmit;
 
 class UserFormSubmitTest extends BaseLayout
 {
     // Traits
-    use InvalidFormSubmit;
+    use FormSubmit;
 
     /**
      * @param array $data
@@ -39,6 +39,36 @@ class UserFormSubmitTest extends BaseLayout
             $data,
             $messages
         );
+    }
+
+    public function testCreateValidSubmission()
+    {
+        // Create client
+        $this->submitUserFormWithValid('/users/create');
+    }
+
+    public function testEditValidSubmission()
+    {
+        // Create client
+        $this->submitUserFormWithValid('/users/3/edit');
+    }
+
+    private function submitUserFormWithValid(string $path)
+    {
+        // Create client
+        $client = $this->createRoleAdminClient();
+        $client->followRedirects(true);
+
+        $data = [
+            'user[username]' => 'XXXX',
+            'user[plainPassword][first]' => 'xxx',
+            'user[plainPassword][second]'=> 'xxx',
+            'user[email]' => 'xxx@gmail.com',
+            'user[role]' => 'admin'
+        ];
+
+        // Create form
+        $this->checkValidFormSubmit($client, $path, $data);
     }
 
     public function userInvalidValues()

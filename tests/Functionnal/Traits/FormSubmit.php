@@ -3,7 +3,7 @@ namespace Tests\Functionnal\Traits;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 
-trait InvalidFormSubmit
+trait FormSubmit
 {
     private function checkFormRenderWithInvalidValues(
         string $path,
@@ -33,6 +33,28 @@ trait InvalidFormSubmit
                 $crawler->filter('span.help-block ul li:contains("' . $message . '")')->count()
             );
         }
+    }
+
+    private function checkValidFormSubmit(
+        Client $client,
+        string $path,
+        array $data
+    ) {
+        // Create form
+        $form = $this->getForm(
+            $client,
+            $path,
+            $data
+        );
+
+        // Request task_create in POST with valid
+        $crawler = $client->submit($form);
+
+        // Check flash message
+        $this->assertEquals(
+            1,
+            $crawler->filter('div.alert-success')->count()
+        );
     }
 
     private function getForm(

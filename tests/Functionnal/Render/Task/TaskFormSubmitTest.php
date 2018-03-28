@@ -3,13 +3,13 @@ namespace Tests\Functionnal\Render\Task;
 
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\Functionnal\Render\BaseLayout;
-use Tests\Functionnal\Traits\InvalidFormSubmit;
+use Tests\Functionnal\Traits\FormSubmit;
 
 class TaskFormSubmitTest extends BaseLayout
 {
 
     // Traits
-    use InvalidFormSubmit;
+    use FormSubmit;
 
     /**
      * @param array $data
@@ -79,20 +79,11 @@ class TaskFormSubmitTest extends BaseLayout
             'task[content]' => 'Content'
         ];
 
-        // Create form
-        $form = $this->getForm(
+        // Check valid submit
+        $this->checkValidFormSubmit(
             $client,
             $path,
             $data
-        );
-
-        // Request task_create in POST with valid
-        $crawler = $client->submit($form);
-
-        // Check flash message
-        $this->assertEquals(
-            1,
-            $crawler->filter('div.alert-success')->count()
         );
     }
 
