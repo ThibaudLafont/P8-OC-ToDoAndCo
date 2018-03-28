@@ -52,7 +52,6 @@ class Task
 
     public function __construct()
     {
-        $this->createdAt = new \Datetime();
         $this->isDone = false;
     }
 
@@ -61,12 +60,12 @@ class Task
         return $this->id;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt() : \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }
@@ -91,13 +90,15 @@ class Task
         $this->content = $content;
     }
 
-    public function isDone()
+    public function isDone() : int
     {
         return $this->isDone;
     }
 
-    public function toggle($flag)
+    public function toggle(int $flag)
     {
+        if($flag>1 || $flag<0)
+            throw new \TypeError('Invalid Toggle value');
         $this->isDone = $flag;
     }
 

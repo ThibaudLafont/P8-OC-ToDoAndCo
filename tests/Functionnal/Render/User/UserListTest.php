@@ -74,9 +74,10 @@ class UserListTest extends BaseLayout
             $crawler->filter('table')->count()
         );
 
-        // test_db contain 2 users
+        // test_db contain 2 users + 1 was created with UserFormSubmitTest
+        // => expect 3
         $this->assertEquals(
-            2,
+            3,
             $crawler->filter('a:contains("Edit")')->count()
         );
     }

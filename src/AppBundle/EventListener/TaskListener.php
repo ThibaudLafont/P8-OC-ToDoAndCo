@@ -37,6 +37,15 @@ class TaskListener
      */
     public function prePersist(Task $task)
     {
+        // Create now DateTime with good TimeZone
+        $createAt = new \DateTime(
+            'now',
+            new \DateTimeZone('Europe/Paris')
+        );
+        // Assign createAt to Task
+        $task->setCreatedAt($createAt);
+
+        // Assign logged user
         $this->assignUser($task);
     }
 

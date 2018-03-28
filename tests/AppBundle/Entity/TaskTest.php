@@ -4,46 +4,78 @@ namespace Tests\AppBundle\Entity;
 use AppBundle\Entity\Task;
 use AppBundle\Entity\User;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class TaskTest extends TestCase
 {
 
-    /**
-     * Test return value of Task::getUserUsername
-     *
-     * @param Task $task
-     *
-     * @param string $username
-     * @dataProvider valuesForUserUsername
-     */
-    public function testGetUserUsername(Task $task, string $username)
+    public function testAnonTaskGetUserUsername()
     {
+        // Anonymous task
+        $task = new Task();
+
         $this->assertEquals(
-            $username,
+            'Anonymous',
+            $task->getUserUsername()
+        );
+    }
+
+    public function testOwnedTaskGetUserUsername()
+    {
+        // First test with owned task
+        $user = new User();
+        $user->setUsername('Username');
+        $task = new Task();
+        $task->setUser($user);
+
+        $this->assertEquals(
+            'Username',
             $task->getUserUsername()
         );
     }
 
     /**
-     * Data provider
-     *
+     * @dataProvider invalidCreateAtValues
+     */
+    public function testSetTaskCreateAtWithInvalid($value)
+    {
+        $task = new Task();
+
+        // Expect TypeError
+        $this->expectException('\TypeError');
+        $task->setCreatedAt($value);
+    }
+    public function invalidCreateAtValues()
+    {
+        return [['lalala'], [1], [true], [new User()]];
+    }
+
+    public function testGetTaskCreateAt()
+    {
+        $task = new Task();
+        $task->setCreatedAt(new \DateTime('now'));
+
+        $this->assertInstanceOf('\DateTime', $task->getCreatedAt());
+    }
+
+    /**
+     * @dataProvider invalidToggleValues
+     */
+    public function testToggleTaskWithInvalid($value)
+    {
+        $task = new Task();
+
+        // Expect TypeError
+        $this->expectException('\TypeError');
+        $task->toggle($value);
+    }
+    /**
+     * DataProvider
      * @return array
      */
-    public function valuesForUserUsername()
+    public function invalidToggleValues()
     {
-        // First test with owned task
-        $user = new User();
-        $user->setUsername('Username');
-        $task1 = new Task();
-        $task1->setUser($user);
-
-        // Second with Anonymous task
-        $task2 = new Task();
-
-        return [
-            [$task1, 'Username'],
-            [$task2, 'Anonymous']
-        ];
+        return [['lalala'], [new \DateTime()], [34]];
     }
 
 }
