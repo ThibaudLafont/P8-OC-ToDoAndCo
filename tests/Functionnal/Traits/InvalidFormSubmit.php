@@ -1,6 +1,8 @@
 <?php
 namespace Tests\Functionnal\Traits;
 
+use Symfony\Bundle\FrameworkBundle\Client;
+
 trait InvalidFormSubmit
 {
     private function checkFormRenderWithInvalidValues(
@@ -11,15 +13,11 @@ trait InvalidFormSubmit
     {
         // Create Client
         $client = $this->createRoleAdminClient();
-        $crawler = $client->request('GET', $path);
-
-        // Select form from submit button
-        $submit = $crawler->selectButton(
-            strpos($path, 'create') ? 'Ajouter' : 'Modifier'
-        );
-        $form = $submit->form($data);
 
         // Request form submission
+        $form = $this->getForm($client, $path, $data);
+
+        // Store crawler
         $crawler = $client->submit($form);
 
         // Check total number of errors
@@ -35,5 +33,20 @@ trait InvalidFormSubmit
                 $crawler->filter('span.help-block ul li:contains("' . $message . '")')->count()
             );
         }
+    }
+
+    private function getForm(
+        Client $client,
+        string $path,
+        array $data
+    ) {
+        // Build Crawler
+        $crawler = $client->request('GET', $path);
+
+        // Select form from submit button
+        $submit = $crawler->selectButton(
+            strpos($path, 'create') ? 'Ajouter' : 'Modifier'
+        );
+        return $submit->form($data);
     }
 }

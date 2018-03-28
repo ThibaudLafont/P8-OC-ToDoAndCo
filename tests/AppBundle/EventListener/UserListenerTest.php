@@ -1,17 +1,12 @@
 <?php
 namespace Tests\AppBundle\EventListener;
 
-use AppBundle\Entity\Task;
 use AppBundle\Entity\User;
-use AppBundle\EventListener\TaskListener;
 use AppBundle\EventListener\UserListener;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
-use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 class UserListenerTest extends TestCase
 {
