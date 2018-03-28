@@ -9,9 +9,6 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class TaskTest extends TestCase
 {
 
-    /**
-     * @covers Task::getUserUsername
-     */
     public function testAnonTaskGetUserUsername()
     {
         // Anonymous task
@@ -23,9 +20,6 @@ class TaskTest extends TestCase
         );
     }
 
-    /**
-     * @covers Task::getUserUsername
-     */
     public function testOwnedTaskGetUserUsername()
     {
         // First test with owned task
@@ -41,7 +35,6 @@ class TaskTest extends TestCase
     }
 
     /**
-     * @covers Task::setCreatedAt()
      * @dataProvider invalidCreateAtValues
      */
     public function testSetTaskCreateAtWithInvalid($value)
@@ -57,10 +50,6 @@ class TaskTest extends TestCase
         return [['lalala'], [1], [true], [new User()]];
     }
 
-    /**
-     * @covers Task::setCreatedAt()
-     * @covers Task::getCreatedAt()
-     */
     public function testGetTaskCreateAt()
     {
         $task = new Task();
@@ -70,7 +59,6 @@ class TaskTest extends TestCase
     }
 
     /**
-     * @covers Task::toggle()
      * @dataProvider invalidToggleValues
      */
     public function testToggleTaskWithInvalid($value)
