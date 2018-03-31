@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>/home/thib/Dev/Docker/www/todo/tests/Functionnal/Traits</OriginalElement>
+  <nodes>
+    <node x="1646.75" y="78.0">\Symfony\Bundle\FrameworkBundle\Test\WebTestCase</node>
+    <node x="874.75" y="0.0">\Tests\Functionnal\Traits\RenderChecker</node>
+    <node x="410.0000000000001" y="456.0">\Tests\Functionnal\Render\Task\TaskFormSubmitTest</node>
+    <node x="789.0000000000001" y="508.0">\Tests\Functionnal\Render\HomepageTest</node>
+    <node x="1277.75" y="26.0">\Tests\Functionnal\Traits\ClientCreator</node>
+    <node x="1791.0" y="521.0">\Tests\Functionnal\Render\SecurityTest</node>
+    <node x="0.0" y="469.0">\Tests\Functionnal\Render\User\UserFormSubmitTest</node>
+    <node x="73.625" y="265.0">\Tests\Functionnal\Traits\FormSubmit</node>
+    <node x="1281.75" y="265.0">\Tests\Functionnal\Render\BaseLayout</node>
+    <node x="2378.0" y="469.0">\Tests\Functionnal\Render\Task\TaskFormRequestTest</node>
+    <node x="2076.0" y="508.0">\Tests\Functionnal\Render\User\UserListTest</node>
+    <node x="1405.0" y="482.0">\Tests\Functionnal\Render\User\UserFormRequestTest</node>
+    <node x="1110.0" y="482.0">\Tests\Functionnal\Render\Task\TaskListTest</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\Tests\Functionnal\Render\BaseLayout" target="\Tests\Functionnal\Traits\RenderChecker">
+      <point x="-90.66666666666674" y="-55.5" />
+      <point x="1327.0833333333335" y="240.0" />
+      <point x="1066.25" y="240.0" />
+      <point x="0.0" y="107.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\BaseLayout" target="\Symfony\Bundle\FrameworkBundle\Test\WebTestCase">
+      <point x="90.66666666666663" y="-55.5" />
+      <point x="1508.4166666666667" y="240.0" />
+      <point x="1769.25" y="240.0" />
+      <point x="0.0" y="29.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\HomepageTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-55.5" />
+      <point x="939.5000000000001" y="426.0" />
+      <point x="1366.75" y="426.0" />
+      <point x="-51.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\Task\TaskFormSubmitTest" target="\Tests\Functionnal\Traits\FormSubmit">
+      <point x="-89.75" y="-107.5" />
+      <point x="499.7500000000001" y="396.0" />
+      <point x="411.125" y="396.0" />
+      <point x="112.5" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\Task\TaskListTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-81.5" />
+      <point x="1247.5" y="436.0" />
+      <point x="1400.75" y="436.0" />
+      <point x="-17.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\BaseLayout" target="\Tests\Functionnal\Traits\ClientCreator">
+      <point x="0.0" y="-55.5" />
+      <point x="1417.75" y="240.0" />
+      <point x="1452.25" y="240.0" />
+      <point x="0.0" y="81.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\User\UserFormRequestTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-81.5" />
+      <point x="1588.0" y="436.0" />
+      <point x="1434.75" y="436.0" />
+      <point x="17.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\User\UserFormSubmitTest" target="\Tests\Functionnal\Traits\FormSubmit">
+      <point x="-97.5" y="-94.5" />
+      <point x="97.5" y="436.0" />
+      <point x="186.125" y="436.0" />
+      <point x="-112.5" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\Task\TaskFormSubmitTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="89.75" y="-107.5" />
+      <point x="679.2500000000001" y="416.0" />
+      <point x="1332.75" y="416.0" />
+      <point x="-85.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\Task\TaskFormRequestTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-94.5" />
+      <point x="2567.5" y="406.0" />
+      <point x="1536.75" y="406.0" />
+      <point x="119.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\User\UserListTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-55.5" />
+      <point x="2217.0" y="416.0" />
+      <point x="1502.75" y="416.0" />
+      <point x="85.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\User\UserFormSubmitTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="97.5" y="-94.5" />
+      <point x="292.5" y="406.0" />
+      <point x="1298.75" y="406.0" />
+      <point x="-119.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\SecurityTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-42.5" />
+      <point x="1923.5" y="426.0" />
+      <point x="1468.75" y="426.0" />
+      <point x="51.0" y="55.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="546.5" y="94.5" />
+  <SelectedNodes>
+    <node>\Tests\Functionnal\Traits\RenderChecker</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constants</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

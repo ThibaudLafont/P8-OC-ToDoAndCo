@@ -40,8 +40,7 @@ class Fixtures extends Fixture
     private function loadUsers(array $users, ObjectManager $manager)
     {
         // loop on every User
-        foreach($users as $username => $attributes)
-        {
+        foreach ($users as $username => $attributes) {
             // Create and hydrate User entity
             $user = new User();
             $user->setUsername($username);
@@ -63,7 +62,7 @@ class Fixtures extends Fixture
     private function loadTasks(array $tasks, ObjectManager $manager)
     {
         // loop on every entry
-        foreach($tasks as $title => $attributes){
+        foreach ($tasks as $title => $attributes) {
             // Create new DateTime from string
             $createdAt = new \DateTime($attributes['created_at']);
 
@@ -75,7 +74,7 @@ class Fixtures extends Fixture
             $task->setCreatedAt($createdAt);
 
             // Check if Task is anonymous
-            if(!is_null($attributes['user'])) {
+            if (!is_null($attributes['user'])) {
                 // If not fetch User in DB
                 $user = $manager->getRepository(User::class)
                     ->findOneBy(['username' => $attributes['user']]);

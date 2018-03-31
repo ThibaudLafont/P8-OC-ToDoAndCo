@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\AppBundle\Controller\DefaultController</OriginalElement>
+  <nodes>
+    <node x="869.0" y="0.0">\AppBundle\Entity\Task</node>
+    <node x="486.0" y="1082.0">\AppBundle\Controller\TaskController</node>
+    <node x="741.0" y="1134.0">\AppBundle\Controller\DefaultController</node>
+    <node x="377.75" y="973.0">\Symfony\Bundle\FrameworkBundle\Controller\Controller</node>
+    <node x="945.0" y="1052.0">\Symfony\Component\Security\Core\Authorization\Voter\Voter</node>
+    <node x="0.0" y="1373.0">\AppBundle\Fixtures\Fixtures</node>
+    <node x="-301.4999999999998" y="225.00000000000045">\AppBundle\Entity\Enumerations\UserRole</node>
+    <node x="258.0" y="1134.0">\AppBundle\Controller\SecurityController</node>
+    <node x="443.5" y="239.0">\Symfony\Component\Form\AbstractType</node>
+    <node x="535.5000000000005" y="1288.9999999999998">\AppBundle\EventListener\TaskListener</node>
+    <node x="324.0" y="478.0">\AppBundle\Form\Type\UserType</node>
+    <node x="79.5" y="1290.0">\Doctrine\Bundle\FixturesBundle\Fixture</node>
+    <node x="443.5" y="0.0">\Symfony\Component\Form\FormTypeInterface</node>
+    <node x="367.75" y="864.0">\Symfony\Component\DependencyInjection\ContainerAwareInterface</node>
+    <node x="282.0" y="1290.0">\AppBundle\EventListener\UserListener</node>
+    <node x="50.5" y="0.0">\Symfony\Component\Security\Core\User\UserInterface</node>
+    <node x="584.0" y="478.0">\AppBundle\Form\Type\TaskType</node>
+    <node x="0.0" y="1108.0">\AppBundle\Controller\UserController</node>
+    <node x="981.5" y="864.0">\Symfony\Component\Security\Core\Authorization\Voter\VoterInterface</node>
+    <node x="0.0" y="213.0">\AppBundle\Entity\User</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\AppBundle\Controller\TaskController" target="\Symfony\Bundle\FrameworkBundle\Controller\Controller">
+      <point x="0.0" y="-81.5" />
+      <point x="603.5" y="1062.0" />
+      <point x="509.0" y="1062.0" />
+      <point x="26.25" y="29.5" />
+    </edge>
+    <edge source="\AppBundle\Form\Type\TaskType" target="\Symfony\Component\Form\AbstractType">
+      <point x="0.0" y="-42.5" />
+      <point x="704.0" y="453.0" />
+      <point x="639.25" y="453.0" />
+      <point x="65.25" y="94.5" />
+    </edge>
+    <edge source="\Symfony\Component\Form\AbstractType" target="\Symfony\Component\Form\FormTypeInterface">
+      <point x="0.0" y="-94.5" />
+      <point x="0.0" y="94.5" />
+    </edge>
+    <edge source="\AppBundle\Controller\DefaultController" target="\Symfony\Bundle\FrameworkBundle\Controller\Controller">
+      <point x="0.0" y="-29.5" />
+      <point x="820.5" y="1052.0" />
+      <point x="561.5" y="1052.0" />
+      <point x="78.75" y="29.5" />
+    </edge>
+    <edge source="\Symfony\Component\Security\Core\Authorization\Voter\Voter" target="\Symfony\Component\Security\Core\Authorization\Voter\VoterInterface">
+      <point x="0.0" y="-55.5" />
+      <point x="0.0" y="69.0" />
+    </edge>
+    <edge source="\AppBundle\Fixtures\Fixtures" target="\Doctrine\Bundle\FixturesBundle\Fixture">
+      <point x="0.0" y="-55.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\AppBundle\Entity\User" target="\Symfony\Component\Security\Core\User\UserInterface">
+      <point x="0.0" y="-303.0" />
+      <point x="0.0" y="81.5" />
+    </edge>
+    <edge source="\AppBundle\Form\Type\UserType" target="\Symfony\Component\Form\AbstractType">
+      <point x="0.0" y="-42.5" />
+      <point x="444.0" y="453.0" />
+      <point x="508.75" y="453.0" />
+      <point x="-65.25" y="94.5" />
+    </edge>
+    <edge source="\Symfony\Bundle\FrameworkBundle\Controller\Controller" target="\Symfony\Component\DependencyInjection\ContainerAwareInterface">
+      <point x="0.0" y="-29.5" />
+      <point x="0.0" y="29.5" />
+    </edge>
+    <edge source="\AppBundle\Controller\SecurityController" target="\Symfony\Bundle\FrameworkBundle\Controller\Controller">
+      <point x="0.0" y="-29.5" />
+      <point x="362.0" y="1062.0" />
+      <point x="456.5" y="1062.0" />
+      <point x="-26.25" y="29.5" />
+    </edge>
+    <edge source="\AppBundle\Controller\UserController" target="\Symfony\Bundle\FrameworkBundle\Controller\Controller">
+      <point x="0.0" y="-55.5" />
+      <point x="119.0" y="1052.0" />
+      <point x="404.0" y="1052.0" />
+      <point x="-78.75" y="29.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.40000000000000013" x="691.7499999999995" y="776.1666666666667" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constants</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

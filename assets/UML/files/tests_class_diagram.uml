@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\Tests\AppBundle\Entity\Enumerations\UserRoleTest</OriginalElement>
+  <nodes>
+    <node x="5392.0" y="389.5">\Tests\AppBundle\Entity\UserTest</node>
+    <node x="410.0" y="698.0">\Tests\Functionnal\Render\Task\TaskFormSubmitTest</node>
+    <node x="1785.0" y="750.0">\Tests\Functionnal\Render\HomepageTest</node>
+    <node x="4007.25" y="26.0">\Tests\Functionnal\Traits\ClientCreator</node>
+    <node x="4271.0" y="737.0">\Tests\Functionnal\StatusCode\StatusCode\LoginTest</node>
+    <node x="2777.0" y="737.0">\Tests\Functionnal\StatusCode\HomepageTest</node>
+    <node x="3689.0" y="737.0">\Tests\Functionnal\StatusCode\User\UserListTest</node>
+    <node x="3087.0" y="737.0">\Tests\Functionnal\StatusCode\Task\TaskEditTest</node>
+    <node x="2106.0" y="763.0">\Tests\Functionnal\Render\SecurityTest</node>
+    <node x="0.0" y="711.0">\Tests\Functionnal\Render\User\UserFormSubmitTest</node>
+    <node x="5053.0" y="389.5">\Tests\AppBundle\Entity\Enumerations\UserRoleTest</node>
+    <node x="1084.0" y="711.0">\Tests\Functionnal\Render\Task\TaskFormRequestTest</node>
+    <node x="2391.0" y="724.0">\Tests\Functionnal\Render\User\UserFormRequestTest</node>
+    <node x="789.0" y="724.0">\Tests\Functionnal\Render\Task\TaskListTest</node>
+    <node x="5166.5" y="91.0">\PHPUnit\Framework\TestCase</node>
+    <node x="1158.5833333333335" y="0.0">\Tests\Functionnal\Traits\RenderChecker</node>
+    <node x="6023.0" y="298.0">\Tests\AppBundle\EventListener\UserListenerTest</node>
+    <node x="5535.0" y="737.0">\Tests\Functionnal\StatusCode\StatusCode\LogoutTest</node>
+    <node x="5845.0" y="737.0">\Tests\Functionnal\StatusCode\Task\TaskCreateTest</node>
+    <node x="4581.0" y="737.0">\Tests\Functionnal\StatusCode\User\UserCreateTest</node>
+    <node x="5731.0" y="285.0">\Tests\AppBundle\EventListener\TaskListenerTest</node>
+    <node x="3377.0" y="737.0">\Tests\Functionnal\StatusCode\User\UserEditTest</node>
+    <node x="4146.0" y="376.5">\Tests\Functionnal\StatusCode\StatusCode</node>
+    <node x="65.625" y="389.5">\Tests\Functionnal\Traits\FormSubmit</node>
+    <node x="4706.0" y="337.5">\Tests\AppBundle\Entity\TaskTest</node>
+    <node x="3980.0" y="737.0">\Tests\Functionnal\StatusCode\Task\TaskListTest</node>
+    <node x="1312.75" y="389.5">\Tests\Functionnal\Render\BaseLayout</node>
+    <node x="5206.0" y="685.0">\Tests\Functionnal\StatusCode\StatusCode\TaskDeleteTest</node>
+    <node x="1483.0" y="750.0">\Tests\Functionnal\Render\User\UserListTest</node>
+    <node x="4893.0" y="737.0">\Tests\Functionnal\StatusCode\Task\TaskToggleTest</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\Tests\Functionnal\StatusCode\User\UserListTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="3824.5" y="655.0" />
+      <point x="4317.818181818182" y="655.0" />
+      <point x="-98.18181818181824" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\HomepageTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-55.5" />
+      <point x="1935.5" y="655.0" />
+      <point x="1499.75" y="655.0" />
+      <point x="51.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\Task\TaskFormSubmitTest" target="\Tests\Functionnal\Traits\FormSubmit">
+      <point x="-89.75" y="-107.5" />
+      <point x="499.75" y="625.0" />
+      <point x="415.125" y="625.0" />
+      <point x="116.5" y="55.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\Entity\TaskTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-107.5" />
+      <point x="4869.5" y="265.0" />
+      <point x="5199.357142857143" y="265.0" />
+      <point x="-13.142857142857338" y="16.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\EventListener\UserListenerTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-147.0" />
+      <point x="6179.5" y="245.0" />
+      <point x="5251.928571428572" y="245.0" />
+      <point x="39.42857142857156" y="16.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\BaseLayout" target="\Tests\Functionnal\Traits\ClientCreator">
+      <point x="0.0" y="-55.5" />
+      <point x="1448.75" y="235.0" />
+      <point x="4098.5" y="235.0" />
+      <point x="-91.25" y="81.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\User\UserFormRequestTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-81.5" />
+      <point x="2574.0" y="635.0" />
+      <point x="1567.75" y="635.0" />
+      <point x="119.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\User\UserFormSubmitTest" target="\Tests\Functionnal\Traits\FormSubmit">
+      <point x="-97.5" y="-94.5" />
+      <point x="97.5" y="665.0" />
+      <point x="182.125" y="665.0" />
+      <point x="-116.5" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\StatusCode" target="\Tests\Functionnal\Traits\ClientCreator">
+      <point x="-135.0" y="-68.5" />
+      <point x="91.25" y="81.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\StatusCode\LogoutTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="5680.0" y="635.0" />
+      <point x="4612.363636363636" y="635.0" />
+      <point x="196.3636363636365" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\Task\TaskFormSubmitTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="89.75" y="-107.5" />
+      <point x="679.25" y="645.0" />
+      <point x="1363.75" y="645.0" />
+      <point x="-85.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\Entity\Enumerations\UserRoleTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-55.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\StatusCode" target="\PHPUnit\Framework\TestCase">
+      <point x="135.0" y="-68.5" />
+      <point x="4551.0" y="255.0" />
+      <point x="5186.214285714286" y="255.0" />
+      <point x="-26.28571428571422" y="16.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\Task\TaskFormRequestTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-94.5" />
+      <point x="1273.5" y="665.0" />
+      <point x="1431.75" y="665.0" />
+      <point x="-17.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\User\UserListTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-55.5" />
+      <point x="1624.0" y="665.0" />
+      <point x="1465.75" y="665.0" />
+      <point x="17.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\Entity\UserTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-55.5" />
+      <point x="5551.5" y="265.0" />
+      <point x="5225.642857142857" y="265.0" />
+      <point x="13.142857142857338" y="16.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\StatusCode\TaskDeleteTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-120.5" />
+      <point x="5360.5" y="645.0" />
+      <point x="4563.272727272728" y="645.0" />
+      <point x="147.27272727272748" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\User\UserCreateTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="4727.0" y="665.0" />
+      <point x="4465.090909090909" y="665.0" />
+      <point x="49.09090909090901" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\User\UserEditTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="3523.0" y="645.0" />
+      <point x="4268.727272727273" y="645.0" />
+      <point x="-147.27272727272725" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\User\UserFormSubmitTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="97.5" y="-94.5" />
+      <point x="292.5" y="635.0" />
+      <point x="1329.75" y="635.0" />
+      <point x="-119.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\EventListener\TaskListenerTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-160.0" />
+      <point x="5867.0" y="255.0" />
+      <point x="5238.785714285714" y="255.0" />
+      <point x="26.28571428571422" y="16.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\SecurityTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-42.5" />
+      <point x="2238.5" y="645.0" />
+      <point x="1533.75" y="645.0" />
+      <point x="85.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\BaseLayout" target="\Tests\Functionnal\Traits\RenderChecker">
+      <point x="-90.66666666666652" y="-55.5" />
+      <point x="0.0" y="107.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\BaseLayout" target="\PHPUnit\Framework\TestCase">
+      <point x="90.66666666666652" y="-55.5" />
+      <point x="1539.4166666666665" y="245.0" />
+      <point x="5173.071428571428" y="245.0" />
+      <point x="-39.42857142857156" y="16.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\Render\Task\TaskListTest" target="\Tests\Functionnal\Render\BaseLayout">
+      <point x="0.0" y="-81.5" />
+      <point x="926.5" y="655.0" />
+      <point x="1397.75" y="655.0" />
+      <point x="-51.0" y="55.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\Task\TaskToggleTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="5039.5" y="655.0" />
+      <point x="4514.181818181818" y="655.0" />
+      <point x="98.18181818181824" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\Task\TaskEditTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="3222.0" y="635.0" />
+      <point x="4219.636363636364" y="635.0" />
+      <point x="-196.3636363636365" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\HomepageTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="2922.0" y="625.0" />
+      <point x="4170.545454545454" y="625.0" />
+      <point x="-245.4545454545455" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\Task\TaskCreateTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="5990.5" y="625.0" />
+      <point x="4661.454545454546" y="625.0" />
+      <point x="245.4545454545455" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\Task\TaskListTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="4115.5" y="665.0" />
+      <point x="4366.909090909091" y="665.0" />
+      <point x="-49.09090909090901" y="68.5" />
+    </edge>
+    <edge source="\Tests\Functionnal\StatusCode\StatusCode\LoginTest" target="\Tests\Functionnal\StatusCode\StatusCode">
+      <point x="0.0" y="-68.5" />
+      <point x="0.0" y="68.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="816.5714285714284" y="594.2857142857142" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constants</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -48,7 +48,7 @@ class UserListener
     public function preFlush(User $user)
     {
         // Check if plainPassword is set
-        if($user->getPlainPassword() !== null){
+        if ($user->getPlainPassword() !== null) {
             // Set user password
             $this->setUserPassword($user);
         }

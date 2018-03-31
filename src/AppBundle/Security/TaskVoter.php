@@ -20,9 +20,13 @@ class TaskVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // Check if deletion
-        if($attribute !== 'delete')   return false;
+        if ($attribute !== 'delete') {
+            return false;
+        }
         // Check class of suject
-        if(!$subject instanceof Task) return false;
+        if (!$subject instanceof Task) {
+            return false;
+        }
 
         return true;
     }
@@ -42,7 +46,9 @@ class TaskVoter extends Voter
         $user = $token->getUser();
 
         // If $user not instanceof User return false
-        if (!$user instanceof User) return false;
+        if (!$user instanceof User) {
+            return false;
+        }
 
         // Store Task
         $task = $subject;
@@ -62,13 +68,17 @@ class TaskVoter extends Voter
     private function canDelete(Task $task, User $user)
     {
         // If Anon task and ROLE_ADMIN User, authorize
-        if(
+        if (
             is_null($task->getUser()) &&
             $user->getRole() === 'admin'
-        ) return true;
+        ) {
+            return true;
+        }
 
         // If owned task and logged user === task owner, authorize
-        if($task->getUser() === $user) return true;
+        if ($task->getUser() === $user) {
+            return true;
+        }
 
         // In other cases, don't authorize
         return false;

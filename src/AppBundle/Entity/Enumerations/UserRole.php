@@ -50,5 +50,4 @@ class UserRole
             return static::$values[$key];
         }
     }
-
 }

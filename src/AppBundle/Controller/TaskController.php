@@ -30,7 +30,7 @@ class TaskController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()) {
+        if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
 
@@ -56,7 +56,7 @@ class TaskController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
 
