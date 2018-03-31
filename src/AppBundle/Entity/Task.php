@@ -97,8 +97,9 @@ class Task
 
     public function toggle(int $flag)
     {
-        if($flag>1 || $flag<0)
+        if ($flag>1 || $flag<0) {
             throw new \TypeError('Invalid Toggle value');
+        }
         $this->isDone = $flag;
     }
 
@@ -120,7 +121,10 @@ class Task
 
     public function getUserUsername()
     {
-        if(is_null($this->getUser())) return 'Anonymous';
-        else return $this->getUser()->getUsername();
+        if (is_null($this->getUser())) {
+            return 'Anonymous';
+        } else {
+            return $this->getUser()->getUsername();
+        }
     }
 }

@@ -57,7 +57,9 @@ class TaskListener
     public function preFlush(Task $task)
     {
         // If task was an Anon one, assign logged User
-        if (is_null($task->getUser())) $this->assignUser($task);
+        if (is_null($task->getUser())) {
+            $this->assignUser($task);
+        }
     }
 
     /**
@@ -71,7 +73,7 @@ class TaskListener
         $session = $this->getTokenStorage()->getToken();
 
         // If session is null, Event is called by Fixtures, doen't want assignation
-        if(!is_null($session)) {
+        if (!is_null($session)) {
             // Assign the user to the trick
             $task->setUser($session->getUser());
         }
@@ -96,5 +98,4 @@ class TaskListener
     {
         $this->tokenStorage = $tokenStorage;
     }
-
 }

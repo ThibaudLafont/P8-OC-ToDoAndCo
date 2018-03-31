@@ -47,7 +47,7 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         // If form submitted
-        if($form->isSubmitted()){
+        if ($form->isSubmitted()) {
             // Check if form values are valids
             if ($form->isValid()) {
 
@@ -88,7 +88,7 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         // Check if form was submitted
-        if($form->isSubmitted()) {
+        if ($form->isSubmitted()) {
             // Check if datas are valid
             if ($form->isValid()) {
                 // Flush modifications
