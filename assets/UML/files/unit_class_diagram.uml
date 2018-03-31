@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>/home/thib/Dev/Docker/www/todo/tests/AppBundle/Entity/Enumerations</OriginalElement>
+  <nodes>
+    <node x="317.0" y="83.0">\Tests\AppBundle\EventListener\TaskListenerTest</node>
+    <node x="916.0" y="187.5">\Tests\AppBundle\Entity\UserTest</node>
+    <node x="698.5" y="0.0">\PHPUnit\Framework\TestCase</node>
+    <node x="0.0" y="96.0">\Tests\AppBundle\EventListener\UserListenerTest</node>
+    <node x="1239.0" y="135.5">\Tests\AppBundle\Entity\TaskTest</node>
+    <node x="593.0" y="187.5">\Tests\AppBundle\Entity\Enumerations\UserRoleTest</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\Tests\AppBundle\Entity\Enumerations\UserRoleTest" target="\PHPUnit\Framework\TestCase">
+      <point x="5.6843418860808015E-14" y="-55.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\Entity\TaskTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-107.5" />
+      <point x="1394.5" y="53.0" />
+      <point x="781.3" y="53.0" />
+      <point x="36.80000000000001" y="16.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\EventListener\UserListenerTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-147.0" />
+      <point x="148.5" y="53.0" />
+      <point x="707.7" y="53.0" />
+      <point x="-36.80000000000001" y="16.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\Entity\UserTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-55.5" />
+      <point x="1067.5" y="63.0" />
+      <point x="762.9000000000001" y="63.0" />
+      <point x="18.400000000000034" y="16.5" />
+    </edge>
+    <edge source="\Tests\AppBundle\EventListener\TaskListenerTest" target="\PHPUnit\Framework\TestCase">
+      <point x="0.0" y="-160.0" />
+      <point x="445.0" y="63.0" />
+      <point x="726.1" y="63.0" />
+      <point x="-18.399999999999977" y="16.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="376.5" y="161.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constants</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
