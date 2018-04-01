@@ -48,7 +48,7 @@ class UserListenerTest extends TestCase
         $user->setPlainPassword('pommepomme');
 
         // Execute prePersist
-        $this->getListener()->prePersist($user);
+        $this->getListener()->preFlush($user);
 
         // Expect password correspond to bcrypted plainPassword
         $this->assertTrue(

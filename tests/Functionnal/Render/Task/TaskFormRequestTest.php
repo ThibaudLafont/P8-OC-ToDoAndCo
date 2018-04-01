@@ -64,22 +64,22 @@ class TaskFormRequestTest extends BaseLayout
             [
                 '/tasks/1/edit',
                 [
-                    'title' => 'Tache 1',
-                    'content'    => 'Contenu de la tache 1'
+                    'title' => 'Tâche 1',
+                    'content'    => 'Contenu de la tâche 1'
                 ]
             ],
             [
                 '/tasks/2/edit',
                 [
-                    'title' => 'Tache 2',
-                    'content'    => 'Contenu de la tache 2'
+                    'title' => 'Tâche 2',
+                    'content'    => 'Contenu de la tâche 2'
                 ]
             ],
             [
                 '/tasks/3/edit',
                 [
-                    'title' => 'Tache 3',
-                    'content'    => 'Contenu de la tache 3'
+                    'title' => 'Tâche 3',
+                    'content'    => 'Contenu de la tâche 3'
                 ]
             ]
         ];
