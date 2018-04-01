@@ -30,17 +30,6 @@ class UserListener
     }
 
     /**
-     * User persist
-     *
-     * @param User $user
-     */
-    public function prePersist(User $user)
-    {
-        // Set user password
-        $this->setUserPassword($user);
-    }
-
-    /**
      * User preFlush
      *
      * @param User $user
